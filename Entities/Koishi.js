@@ -21,7 +21,7 @@ class Koishi extends Character {
     //     }
     //     break;
     // }
-    this.BB = new BoundingBox(this.x + 105, this.y + 42, 90, 230);
+    this.BB = new BoundingBox(this.x + 105, this.y + 72, 90, 170);
   }
   update(){
     // console.log(this.x + "," + this.y);

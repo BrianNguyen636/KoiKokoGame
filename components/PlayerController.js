@@ -19,6 +19,7 @@ class PlayerController {
     this.animationLock = 0;
 
     this.attackEffect;
+    this.attackBox = null;
 
     this.jumpStrength = 8;
     this.gravity = 40;
@@ -46,12 +47,28 @@ class PlayerController {
   }
 
   updateState() {
+    // ANY LOCK OUT STATES HERE
     if (this.player.state == 4 && this.animationLock > 0) {
-      // ANY LOCK OUT STATES HERE
+      //ATTACKING
+      if (this.animationLock < 3/5 * this.player.getCurrentAnimation().totalTime && this.attackBox == null) {
+        if (this.player.facing == 0) {
+          this.attackBox = new BoundingBox(this.player.x + 194,this.player.y+74,300,400);
+        } else {
+          this.attackBox = new BoundingBox(this.player.x +(500 - 194 - 300),this.player.y+74,300,400);
+        }
+      }
+      if (this.attackBox) {
+        if (this.attackBox.collide(gameEngine.boss.BB) && !this.damaged) {
+          console.log("collide");
+          this.damaged = true;
+        }
+      }
+      // console.log(this.attackBox);
     } else if (this.dashing) {
 
     } else {
       this.animationLock = 0;
+      this.attackBox = null;
       if (this.grounded) {
         //GROUNDED STATES
         this.player.state = 0;
@@ -71,10 +88,6 @@ class PlayerController {
         if (inputManager.left && !inputManager.right) {
           this.player.facing = 1;
         }
-        if ((inputManager.upHold||inputManager.AHold) && this.yVelocity < 0) { //High jump
-          this.gravity = 20;
-        } else this.gravity = 40;
-        
         if (this.yVelocity >= 0) {
           this.player.state = 3;
         } else this.player.state = 2;
@@ -92,6 +105,9 @@ class PlayerController {
         }
       }
     }
+    if ((inputManager.upHold||inputManager.AHold) && this.yVelocity < 0) { //High jump
+      this.gravity = 20;
+    } else this.gravity = 40;
     //ATTACKING
     if (inputManager.B && this.animationLock <= 0) {
       this.player.state = 4;
@@ -100,24 +116,24 @@ class PlayerController {
       let effect;
       if (this.player.facing == 0) {
         effect = new Effect(this.player.x + 57, this.player.y - 28, 'Kokoro', 600,
-          this.player.facing, 5, 9
-        )
+          this.player.facing, 5, 9)
       } else {
         effect = new Effect(this.player.x + (500-57-600), this.player.y - 28, 'Kokoro', 600,
-        this.player.facing, 5, 9
-      )
+        this.player.facing, 5, 9)
       }
       effect.displayX -= gameEngine.camera.x;
       effect.displayY -= (gameEngine.camera.y - 50);
       effect.id='playerAttackEffect'
       this.attackEffect = effect;
       gameEngine.addEntity(effect);
+      this.damaged = false;
     }
   }
 
   updateMovement() {
     this.player.y += this.yVelocity;
     this.player.x += this.xVelocity;
+
     if (!this.grounded) {
       this.yVelocity += this.gravity * gameEngine.clockTick;
     }
@@ -143,6 +159,10 @@ class PlayerController {
     if (this.attackEffect) {
       this.attackEffect.displayX += this.player.delta.x;
       this.attackEffect.displayY += this.player.delta.y;
+    }
+    if (this.attackBox) {
+      this.attackBox.x += this.player.delta.x;
+      this.attackBox.y += this.player.delta.y;
     }
     this.updateState();
     this.updateMovement();

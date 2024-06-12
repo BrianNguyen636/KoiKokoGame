@@ -27,8 +27,9 @@ class GameEngine {
         this.addEntity(player);
         this.player = player;
         this.camera = new Camera();
-
-        this.addEntity(new Koishi(this));
+        let kosher = new Koishi(this)
+        this.addEntity(kosher);
+        this.boss = kosher;
     };
 
     start() {

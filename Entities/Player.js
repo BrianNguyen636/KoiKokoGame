@@ -8,12 +8,11 @@ class Player extends Character {
   loadAnimations() {
     this.makeAnimation(0, 0, 0, 4, 6); //IDLE
     this.makeAnimation(1, 0, 0, 4, 6); //IDLE
-    this.makeAnimation(2, 0, 0, 4, 6); //IDLE
-    this.makeAnimation(3, 0, 0, 4, 6); //IDLE
+
 
     // this.makeAnimation(1, 1, 0, 6, 9); //WALK
-    // this.makeAnimation(2, 2, 0, 2, 3); //JUMP
-    // this.makeAnimation(3, 2, 2, 1, 1); //FALL
+    this.makeAnimation(2, 2, 0, 2, 3); //JUMP
+    this.makeAnimation(3, 2, 2, 1, 1); //FALL
     this.makeAnimation(4, 3, 0, 5, 9);
   }
 
@@ -61,6 +60,15 @@ class Player extends Character {
       ctx.rect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height);
 
       ctx.stroke();
+
+      if (this.controller.attackBox != null) {
+        ctx.strokeStyle = "red";
+        ctx.beginPath();
+        ctx.rect(this.controller.attackBox.x - this.game.camera.x, this.controller.attackBox.y, 
+          this.controller.attackBox.width, this.controller.attackBox.height);
+        ctx.stroke();
+      }
+
     }
   }
 }
