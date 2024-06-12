@@ -25,7 +25,7 @@ class Player extends Character {
     //     }
     //     break;
     // }
-    this.BB = new BoundingBox(this.x + 206, this.y + 229, 60, 150);
+    this.BB = new BoundingBox(this.x + 220, this.y + 229, 60, 150);
   }
 
   update() {

@@ -21,7 +21,7 @@ class PlayerController {
     this.attackEffect;
 
     this.jumpStrength = 8;
-    this.gravity = 30;
+    this.gravity = 40;
     this.jumpDistance = 5;
   }
 
@@ -73,7 +73,7 @@ class PlayerController {
         }
         if ((inputManager.upHold||inputManager.AHold) && this.yVelocity < 0) { //High jump
           this.gravity = 20;
-        } else this.gravity = 30;
+        } else this.gravity = 40;
         
         if (this.yVelocity >= 0) {
           this.player.state = 3;
@@ -97,9 +97,16 @@ class PlayerController {
       this.player.state = 4;
       this.player.getCurrentAnimation().resetFrames();
       this.animationLock = this.player.getCurrentAnimation().totalTime - gameEngine.clockTick;
-      let effect = new Effect(this.player.x + 57, this.player.y - 28, 'Kokoro', 600,
+      let effect;
+      if (this.player.facing == 0) {
+        effect = new Effect(this.player.x + 57, this.player.y - 28, 'Kokoro', 600,
+          this.player.facing, 5, 9
+        )
+      } else {
+        effect = new Effect(this.player.x + (500-57-600), this.player.y - 28, 'Kokoro', 600,
         this.player.facing, 5, 9
       )
+      }
       effect.displayX -= gameEngine.camera.x;
       effect.displayY -= (gameEngine.camera.y - 50);
       effect.id='playerAttackEffect'

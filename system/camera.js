@@ -36,14 +36,14 @@ class Camera {
         // }
 
 
-        if (this.x > 0 && this.x+this.width < 2500) {
-            this.x += this.player.delta.x;
+        if (this.x > 0 && this.x+this.width < 2500 || 
+            (this.player.displayX > (this.width - this.player.sWidth) / 2 && this.x <= 0) ||
+            (this.player.displayX < (this.width - this.player.sWidth) / 2 && this.x+this.width >= 2500)
+        ) {
+            this.x = this.pCenter.x - (this.width / 2);
+            this.player.displayX = (this.width - this.player.sWidth)/2;
         } else {
             this.player.displayX += this.player.delta.x;
-            if ((this.player.displayX > (this.width - this.player.sWidth) / 2 && this.x <= 0) ||
-                (this.player.displayX < (this.width - this.player.sWidth) / 2 && this.x+this.width >= 2500)) {
-                this.x += this.player.delta.x;
-            }
         }
 
         this.delta = {
