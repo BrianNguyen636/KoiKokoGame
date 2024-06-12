@@ -3,6 +3,7 @@ const inputManager = new InputManager();
 const ASSET_MANAGER = new AssetManager();
 ASSET_MANAGER.queueDownload("./assets/KokoroSprites.png")
 ASSET_MANAGER.queueDownload("./assets/KokoroSpritesFlip.png")
+ASSET_MANAGER.queueDownload("./assets/KokoroEffects.png")
 ASSET_MANAGER.queueDownload("./assets/Kokoro2Sprites.png")
 ASSET_MANAGER.queueDownload("./assets/Kokoro2SpritesFlip.png")
 ASSET_MANAGER.queueDownload("./assets/KoishiSprites.png")

@@ -18,6 +18,8 @@ class PlayerController {
 
     this.animationLock = 0;
 
+    this.attackEffect;
+
     this.jumpStrength = 8;
     this.gravity = 30;
     this.jumpDistance = 5;
@@ -95,6 +97,14 @@ class PlayerController {
       this.player.state = 4;
       this.player.getCurrentAnimation().resetFrames();
       this.animationLock = this.player.getCurrentAnimation().totalTime - gameEngine.clockTick;
+      let effect = new Effect(this.player.x + 57, this.player.y - 28, 'Kokoro', 600,
+        this.player.facing, 5, 9
+      )
+      effect.displayX -= gameEngine.camera.x;
+      effect.displayY -= (gameEngine.camera.y - 50);
+      effect.id='playerAttackEffect'
+      this.attackEffect = effect;
+      gameEngine.addEntity(effect);
     }
   }
 
@@ -123,6 +133,10 @@ class PlayerController {
   update() {
     // console.log(this.animationLock);
     if (this.animationLock > 0) this.animationLock -= gameEngine.clockTick;
+    if (this.attackEffect) {
+      this.attackEffect.displayX += this.player.delta.x;
+      this.attackEffect.displayY += this.player.delta.y;
+    }
     this.updateState();
     this.updateMovement();
   }
