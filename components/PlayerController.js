@@ -8,13 +8,12 @@ class PlayerController {
 
     this.grounded = false;
     this.dashing = false;
+    this.airdash = false;
     this.doubleJumped = false;
 
     this.speed = 500;
-    this.dashSpeed = 8;
-    this.dashAccel = 1;
-    this.dashTimer = 0;
-    this.dashDuration = 30;
+    this.dashSpeed = 900;
+    this.dashDuration = 0;
 
     this.animationLock = 0;
 
@@ -35,6 +34,7 @@ class PlayerController {
     }
     this.yVelocity = -this.jumpStrength;
     this.grounded = false;
+    this.dashDuration = 0;
   }
 
   checkCollisions(){
@@ -59,13 +59,12 @@ class PlayerController {
       }
       if (this.attackBox) {
         if (this.attackBox.collide(gameEngine.boss.BB) && !this.damaged) {
-          console.log("collide");
           this.damaged = true;
         }
       }
       // console.log(this.attackBox);
-    } else if (this.dashing) {
-
+    } else if (this.dashDuration > 0) {
+      this.dashDuration -= gameEngine.clockTick;
     } else {
       this.animationLock = 0;
       this.attackBox = null;
@@ -92,6 +91,17 @@ class PlayerController {
           this.player.state = 3;
         } else this.player.state = 2;
       }
+      //DASHING
+      this.dashing = false;
+      if (inputManager.C && !inputManager.CHold) { //DASH
+          if (this.airdash || this.grounded) {
+              this.game.CHold = true;
+              if (!this.grounded)this.airdash = false;
+              this.player.state = 5;
+              this.dashDuration = 0.5;
+              this.yVelocity = 0;
+          }
+      }
     }
     //JUMPING
     if ((inputManager.up && !inputManager.upHold)||(inputManager.A && !inputManager.AHold)) {
@@ -109,7 +119,7 @@ class PlayerController {
       this.gravity = 20;
     } else this.gravity = 40;
     //ATTACKING
-    if (inputManager.B && this.animationLock <= 0) {
+    if (inputManager.B && this.animationLock <= 0 && this.dashDuration <= 0) {
       this.player.state = 4;
       this.player.getCurrentAnimation().resetFrames();
       this.animationLock = this.player.getCurrentAnimation().totalTime - gameEngine.clockTick;
@@ -128,26 +138,37 @@ class PlayerController {
       gameEngine.addEntity(effect);
       this.damaged = false;
     }
+    
   }
 
   updateMovement() {
     this.player.y += this.yVelocity;
     this.player.x += this.xVelocity;
 
-    if (!this.grounded) {
+    if (!this.grounded && this.dashDuration <= 0) { //GRAVITY
       this.yVelocity += this.gravity * gameEngine.clockTick;
     }
-    if (inputManager.right && !inputManager.left) {
-      this.player.x += this.speed * gameEngine.clockTick;
-    }
-    if (inputManager.left && !inputManager.right) {
-      this.player.x -= this.speed * gameEngine.clockTick;
+
+    if (this.dashDuration > 0) { //DASH
+      if (this.player.facing == 0) {
+        this.player.x += this.dashSpeed * gameEngine.clockTick;
+      } else {
+        this.player.x -= this.dashSpeed * gameEngine.clockTick;
+      }
+    } else { //NORMAL MOVEMENT
+      if (inputManager.right && !inputManager.left) {
+        this.player.x += this.speed * gameEngine.clockTick;
+      }
+      if (inputManager.left && !inputManager.right ) {
+        this.player.x -= this.speed * gameEngine.clockTick;
+      }
     }
     //CHECK IF HIT FLOOR
     if (this.player.y + this.player.yBoxOffset > this.game.floor && !this.grounded && this.yVelocity != 0) {
       this.player.y = this.game.floor - this.player.yBoxOffset;
       this.yVelocity = 0;
       this.grounded = true;
+      this.airdash = true;
       this.doubleJumped = false;
     }
     this.checkCollisions();

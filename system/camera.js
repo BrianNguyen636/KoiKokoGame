@@ -43,6 +43,8 @@ class Camera {
             this.x = this.pCenter.x - (this.width / 2);
             this.player.displayX = (this.width - this.player.sWidth)/2;
         } else {
+            if (this.x <= 0) this.x = 0;
+            if (this.x+this.width >= 2500) this.x = 2500 - this.width;
             this.player.displayX += this.player.delta.x;
         }
 

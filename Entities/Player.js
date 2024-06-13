@@ -7,13 +7,12 @@ class Player extends Character {
 
   loadAnimations() {
     this.makeAnimation(0, 0, 0, 4, 6); //IDLE
-    this.makeAnimation(1, 0, 0, 4, 6); //IDLE
-
-
-    // this.makeAnimation(1, 1, 0, 6, 9); //WALK
+    this.makeAnimation(1, 1, 0, 6, 9); //WALK
     this.makeAnimation(2, 2, 0, 2, 3); //JUMP
     this.makeAnimation(3, 2, 2, 1, 1); //FALL
-    this.makeAnimation(4, 3, 0, 5, 9);
+    this.makeAnimation(4, 3, 0, 5, 9); //ATTACK
+    this.makeAnimation(5, 4, 0, 2, 6); //DASH
+
   }
 
   updateBB() {
@@ -50,8 +49,9 @@ class Player extends Character {
       this.displayX,
       this.displayY
     );
-    ctx.fillStyle='green';
-    ctx.fillText(this.x + ", " + this.y, this.displayX + 200, this.displayY + 500, 100);
+
+    // ctx.fillStyle='green';
+    // ctx.fillText(this.x + ", " + this.y, this.displayX + 200, this.displayY + 500, 100);
 
     if (this.game.boxView) {
       ctx.strokeStyle = "yellow";

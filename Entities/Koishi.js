@@ -30,8 +30,9 @@ class Koishi extends Character {
   }
   draw(ctx) {
     this.animations[this.facing][this.state].drawFrame(this.game.clockTick, ctx, this.displayX, this.displayY);
-    ctx.fillStyle = 'green';
-    ctx.fillText(this.x + ", " + this.y, this.displayX, this.displayY + 300, 100);
+    
+    // ctx.fillStyle = 'green';
+    // ctx.fillText(this.x + ", " + this.y, this.displayX, this.displayY + 300, 100);
 
     if (this.game.boxView) {
       ctx.strokeStyle = "yellow";
