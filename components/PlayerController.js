@@ -65,6 +65,12 @@ class PlayerController {
       // console.log(this.attackBox);
     } else if (this.dashDuration > 0) {
       this.dashDuration -= gameEngine.clockTick;
+      if (!this.ghostTimer || this.ghostTimer <= 0) {
+        this.ghostTimer = (0.075)
+        let ghost = new Afterimage(this.player.x - gameEngine.camera.x, this.player.y, 'Kokoro', 500, this.player.facing, gameEngine);
+        gameEngine.addEntity(ghost);
+      }
+      this.ghostTimer -= gameEngine.clockTick;
     } else {
       this.animationLock = 0;
       this.attackBox = null;
