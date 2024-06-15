@@ -19,6 +19,25 @@ class GameEngine {
         this.boxView = false;
     };
 
+    startScreen(ctx, player) {
+        ctx.canvas.addEventListener("click", e => {
+            if (this.startMenu == null) {
+                // ASSET_MANAGER.playSound("Pause");
+                this.startMenu = true;
+                this.init(ctx, player);
+                this.start();
+            }
+        });
+        ctx.canvas.addEventListener("keydown", e => {
+            if (this.startMenu == null) {
+                // ASSET_MANAGER.playSound("Pause");
+                this.startMenu = true;
+                this.init(ctx, player);
+                this.start();
+            }
+        });
+    }
+
     init(ctx, player) {
         this.ctx = ctx;
         inputManager.startInput();
@@ -30,6 +49,7 @@ class GameEngine {
         let kosher = new Koishi(this)
         this.addEntity(kosher);
         this.boss = kosher;
+        this.uiManager = new UIManager(this);
     };
 
     start() {
@@ -101,12 +121,14 @@ class GameEngine {
     };
 
     loop() {
-
         inputManager.update();
-        this.clockTick = this.timer.tick();
-        this.update();
-        this.draw();
+        if (this.mainMenu) {
 
+        } else { //NORMAL GAME
+            this.clockTick = this.timer.tick();
+            this.update();
+            this.draw();
+        }
     };
 
 };

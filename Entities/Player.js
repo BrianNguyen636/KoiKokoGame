@@ -12,6 +12,9 @@ class Player extends Character {
     this.makeAnimation(3, 2, 2, 1, 1); //FALL
     this.makeAnimation(4, 3, 0, 5, 9); //ATTACK
     this.makeAnimation(5, 4, 0, 2, 6); //DASH
+    this.makeAnimation(6, 0, 0, 4, 6); //HURT
+    this.makeAnimation(7, 0, 0, 4, 6); //LOSE
+
 
   }
 
@@ -43,12 +46,14 @@ class Player extends Character {
 
   draw(ctx) {
     // this.drawShadow(ctx);
+    if (this.controller.invuln > 0 && !this.dead()) ctx.globalAlpha = 0.5;
     this.animations[this.facing][this.state].drawFrame(
       this.game.clockTick,
       ctx,
       this.displayX,
       this.displayY
     );
+    ctx.globalAlpha = 1;
 
     // ctx.fillStyle='green';
     // ctx.fillText(this.x + ", " + this.y, this.displayX + 200, this.displayY + 500, 100);

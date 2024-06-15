@@ -2,70 +2,19 @@ class UIManager {
     constructor(game) {
         this.game = game;
         this.entities = game.entities;
-        // this.playerHealth;
+        this.playerHealth;
         // this.bossHealth;
-        // this.healthIcon = ASSET_MANAGER.getAsset("./assets/Health.png");
-        // this.bgmTitle;
+        this.healthIcon = ASSET_MANAGER.getAsset("./assets/Health.png");
         this.alpha = 0;
         this.frameTimer = 0;
         this.fps = 0;
         this.frameCount = 0;
         // this.tip = "error";
     }
-    // update() {
-    //     this.bossHealth = undefined;
-    //     for (let i = 0; i < this.entities.length; i++) {
-    //         let entity = this.entities[i];
-    //         if (!entity.removeFromWorld) {
-    //             if (entity.id == "player") {
-    //                 this.playerHealth = entity.health;
-    //             }
-    //             if (entity.id == "boss") {
-    //                 this.bossName = entity.name;
-    //                 if (this.bossName == "Okuu") this.bossName = "Utsuho";
-    //                 this.bossHealth = entity.health;
-    //             }
-    //         }
-    //     }
-    // }
+    update() {
+        this.playerHealth = this.game.player.health;
+    }
 
-    // drawNextStage(ctx) {
-    //     let stages = [
-    //         "Boss Rush",
-    //         "Stage 1",
-    //         "Stage 2",
-    //         "Stage 3",
-    //         "Stage 4"
-    //     ];
-    //     if (this.game.roomManager.stage == 0) {
-    //         ctx.fillStyle = "yellow";
-    //         ctx.strokeStyle = "black";
-    //         ctx.font = "30px arial";
-    //         if (this.game.selectedStage == 0) {
-    //             ctx.fillText("To " + stages[this.game.selectedStage], 1100, 470, 150);
-    //             ctx.strokeText("To " + stages[this.game.selectedStage], 1100, 470, 150);
-    //             let diff = "Normal";
-    //             if (this.game.lunatic) diff = "Lunatic";
-    //             ctx.fillText("[" + diff + "]", 1120, 500, 100);
-    //             ctx.strokeText("[" + diff + "]", 1120, 500, 100);
-    //         } else {
-    //             ctx.fillText("To " + stages[this.game.selectedStage], 1100, 500, 150);
-    //             ctx.strokeText("To " + stages[this.game.selectedStage], 1100, 500, 150);
-    //         }
-
-    //         ctx.fillText("->", 1150, 530);
-    //         ctx.strokeText("->", 1150, 530);
-
-    //     } else if (!this.game.combat){
-    //         ctx.fillStyle = "yellow";
-    //         ctx.strokeStyle = "black";
-    //         ctx.font = "30px arial";
-    //         ctx.fillText("Next", 1100, 500, 150);
-    //         ctx.strokeText("Next", 1100, 500, 150);
-    //         ctx.fillText("->", 1150, 530);
-    //         ctx.strokeText("->", 1150, 530);
-    //     }
-    // }
 
     // drawPause(ctx) {
     //     let selected = this.game.menuController.selected;
@@ -101,72 +50,12 @@ class UIManager {
     //     ctx.strokeText("Main Menu", 470, 460);
         
 
-    //     ctx.font = "20px arial";
 
-    //     if (!this.tipRolled) {
-    //         this.tip = this.rollTips();
-    //         this.tipRolled = true;
-    //     }
-    //     ctx.globalAlpha = 0.5;
-    //     ctx.fillStyle = "black";
-    //     ctx.fillRect(190, 770, 900, 30);
-    //     ctx.fillStyle = "white";
-    //     ctx.globalAlpha = 1;
-    //     ctx.fillText("Tip: " + this.tip, 200, 790, 900);
-    // }
-
-    // rollTips() {
-    //     let text = "error";
-    //     switch(this.game.roomManager.stage) {
-    //         case(1): {
-    //             let tips = [
-    //                 "Her spinning blizzard has safe spots where you can stand to be safe.",
-    //                 "Making distance can give you more time to react to attacks.",
-    //                 "Attacks keep you from dashing. Don't overextend!"
-    //             ]
-    //             let roll = Math.floor(Math.random() * 3);
-    //             text = tips[roll];
-    //             break; 
-    //         }
-    //         case(2): {
-    //             let tips = [
-    //                 "Her double palm-blast has a dead-zone above her. Get ready to jump when you see it.",
-    //                 "Dodging towards her when she jumps makes it easier to avoid the stomp attack.",
-    //                 "Making distance can make her Flurry Shots easier to dodge."
-    //             ]
-    //             let roll = Math.floor(Math.random() * 3);
-    //             text = tips[roll];
-    //             break;
-    //         }
-    //         case(3): {
-    //             let tips = [
-    //                 "Don't move too fast when dodging the pillars or else you will trap yourself.",
-    //                 "Listen for the audio ques to dodge the full-screen slash.",
-    //                 "When you see her preparing to summon the pillars, make sure you have enough space to walk."
-    //             ]
-    //             let roll = Math.floor(Math.random() * 3);
-    //             text = tips[roll];
-    //             break;
-    //         }
-    //         case(4): {
-    //             let tips = [
-    //                 "Fast-falling can make the flying tackle easier to dodge.",
-    //                 "The carpet bomb attack is easier to dodge the longer she flies.",
-    //                 "Avoid putting yourself between the boss and the corner."
-    //             ]
-    //             let roll = Math.floor(Math.random() * 3);
-    //             text = tips[roll];
-    //             break;
-    //         }
-    //     }
-    //     return text;
-    // }
-
-    // drawPlayerHealth(ctx) {
-    //     for (let i = 0; i < this.playerHealth; i++) {
-    //         ctx.drawImage(this.healthIcon, 100 + i * 50, 40);
-    //     }
-    // }
+    drawPlayerHealth(ctx) {
+        for (let i = 0; i < this.game.player.health; i++) {
+            ctx.drawImage(this.healthIcon,0,0,500,500,50 + i * 50, 20, 100,100);
+        }
+    }
 
     // drawVictory(ctx) {
     //     let selected = this.game.menuController.selected;
@@ -466,7 +355,7 @@ class UIManager {
         this.drawFPS(ctx);
         // if (this.game.roomManager.stage != 0) this.drawTimer(ctx);
         // if (this.bossHealth != null || this.bossHealth >= 0) this.drawBossHealthBar(ctx);
-        // this.drawPlayerHealth(ctx);
+        this.drawPlayerHealth(ctx);
         // this.drawBGM(ctx);
         // this.drawNextStage(ctx);
         // if (!this.game.paused) this.drawDialog(ctx);

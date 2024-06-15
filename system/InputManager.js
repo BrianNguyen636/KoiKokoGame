@@ -68,11 +68,11 @@ class InputManager {
         this.controllerBinds.set(15, "Right");
         this.controllerBinds.set(12, "Up");
         this.controllerBinds.set(13, "Down");
-    
-        // this.controllerBinds.set(0, "Jump");
-        // this.controllerBinds.set(1, "Dash");
-        // this.controllerBinds.set(2, "Attack");
-        // this.controllerBinds.set(9, "Pause");
+        this.controllerBinds.set(0, "A");
+        this.controllerBinds.set(1, "C");
+        this.controllerBinds.set(2, "B");
+        this.controllerBinds.set(9, "Pause");
+        
     };
     startInput() {
         var that = this;
