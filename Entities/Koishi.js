@@ -8,10 +8,13 @@ class Koishi extends Character {
   }
 
   loadAnimations() {
-    this.makeAnimation(0, 0, 0, 3, 3); //IDLE
-    // this.makeAnimation(1, 1, 0, 6, 9); //WALK
-    // this.makeAnimation(2, 2, 0, 2, 3); //JUMP
-    // this.makeAnimation(3, 2, 2, 1, 1); //FALL
+    //IDLE
+    this.makeAnimation(0, 0, 0, 3, 3);
+    //JUMP
+    this.makeAnimation(1, 1, 0, 3, 9);
+    this.makeAnimation(2, 1, 2, 3, 1);
+    //LAND
+    this.makeAnimation(3, 1, 3, 4, 1);
   }
   updateBB() {
     // switch (this.state) {
@@ -24,7 +27,7 @@ class Koishi extends Character {
     this.BB = new BoundingBox(this.x + 105, this.y + 72, 90, 170);
   }
   update(){
-    // console.log(this.x + "," + this.y);
+    console.log(this.x + "," + this.y);
     this.controller.update();
     this.updateBB();
   }

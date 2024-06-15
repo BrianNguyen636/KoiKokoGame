@@ -100,10 +100,11 @@ class PlayerController {
 
   hurt(other) {
     this.player.health--;
-    this.invuln = 2;
     // this.hurtDuration = 1;
     this.player.state = this.player.hurtState;
     this.knockback(other);
+    this.invuln = 2;
+
   }
 
   checkCollisions(){
@@ -136,7 +137,12 @@ class PlayerController {
   updateState() {
     // ANY LOCK OUT STATES HERE
     if (this.player.state == this.player.hurtState) { //HURT
-      if (this.yVelocity == 0) this.player.state = 0;
+      if (this.yVelocity == 0) {
+        this.player.state = 0;
+        if (this.player.dead()) {
+          this.player.state = this.player.hurtState + 1;
+        }
+      } 
     } else if (this.player.state == 4 && this.animationLock > 0) {//ATTACKING
       this.attackState();
     } else if (this.dashDuration > 0) {
@@ -241,7 +247,9 @@ class PlayerController {
       this.attackBox.x += this.player.delta.x;
       this.attackBox.y += this.player.delta.y;
     }
-    this.updateState();
-    this.updateMovement();
+    if (this.player.state != this.player.hurtState + 1) {
+      this.updateState();
+      this.updateMovement();
+    }
   }
 }
