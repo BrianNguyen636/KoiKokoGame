@@ -88,6 +88,7 @@ class PlayerController {
   knockback(other) {
     this.grounded = false;
     this.yVelocity = -1400;
+    this.dashDuration = 0;
     this.doublejump = true;
     if (this.player.BB.midX > other.BB.midX) {
       this.xVelocity = 400;
@@ -105,17 +106,30 @@ class PlayerController {
   }
 
   checkCollisions(){
+    //FLOOR COLLISION
+    if (this.player.y + this.player.yBoxOffset > this.game.floor && !this.grounded && this.yVelocity != 0) {
+      this.player.y = this.game.floor - this.player.yBoxOffset;
+      this.yVelocity = 0;
+      this.xVelocity = 0;
+      this.grounded = true;
+      this.airdash = true;
+      this.doubleJumped = false;
+    }
+    //WALL COLLISIONS
     if (this.player.BB.x < 0) {
       this.player.x = 0 + (this.player.x - this.player.BB.x);
     }
     if (this.player.BB.x + this.player.BB.width > 2500) {
       this.player.x = 2500 - this.player.BB.width - (this.player.BB.x - this.player.x);
     }
-    if (this.player.BB.collide(gameEngine.boss.BB)) {
-      if (this.invuln <= 0) {
-        this.hurt(gameEngine.boss);
+    //ENEMY COLLISIONS
+    gameEngine.entities.forEach(e=> {
+      if (e.id == 'enemy' || e.id == 'attack') {
+        if (this.player.BB.collide(e.BB) && this.invuln <= 0) {
+            this.hurt(e);
+        }
       }
-    }
+    })
   }
 
   updateState() {
@@ -206,15 +220,6 @@ class PlayerController {
       if (inputManager.left && !inputManager.right ) {
         this.player.x -= this.speed * gameEngine.clockTick;
       }
-    }
-    //CHECK IF HIT FLOOR
-    if (this.player.y + this.player.yBoxOffset > this.game.floor && !this.grounded && this.yVelocity != 0) {
-      this.player.y = this.game.floor - this.player.yBoxOffset;
-      this.yVelocity = 0;
-      this.xVelocity = 0;
-      this.grounded = true;
-      this.airdash = true;
-      this.doubleJumped = false;
     }
     this.checkCollisions();
   }
