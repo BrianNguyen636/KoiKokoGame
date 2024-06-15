@@ -142,6 +142,8 @@ class UIManager {
         ctx.globalAlpha = 1;
         // ctx.fillStyle = "White";
         // ctx.fillText(this.bossName, 250, 750, 80);
+        ctx.fillStyle = "black";
+        ctx.fillRect(238, 758, 804, 24)
         ctx.fillStyle = "Green";
         ctx.fillRect(240, 760, 800, 20);
         ctx.fillStyle = "Red";

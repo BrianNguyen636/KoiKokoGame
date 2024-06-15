@@ -16,7 +16,7 @@ class GameEngine {
         this.options = options || {
             debugging: false,
         };
-        this.boxView = true;
+        this.boxView = false;
     };
 
     startScreen(ctx, player) {
