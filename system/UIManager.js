@@ -3,7 +3,7 @@ class UIManager {
         this.game = game;
         this.entities = game.entities;
         this.playerHealth;
-        // this.bossHealth;
+        this.bossHealth;
         this.healthIcon = ASSET_MANAGER.getAsset("./assets/Health.png");
         this.alpha = 0;
         this.frameTimer = 0;
@@ -11,9 +11,10 @@ class UIManager {
         this.frameCount = 0;
         // this.tip = "error";
     }
-    update() {
-        this.playerHealth = this.game.player.health;
-    }
+    // update() {
+    //     this.playerHealth = this.game.player.health;
+    //     this.bossHealth = this.game.boss.health;
+    // }
 
 
     // drawPause(ctx) {
@@ -132,20 +133,20 @@ class UIManager {
     //     }
     // }
     
-    // drawBossHealthBar(ctx) {
-    //     const healthPercent = this.bossHealth / 50;
-    //     ctx.font = "30px Arial";
-    //     ctx.fillStyle = "Black";
-    //     ctx.globalAlpha = 0.6;
-    //     ctx.fillRect(240, 720, 100, 50);
-    //     ctx.globalAlpha = 1;
-    //     ctx.fillStyle = "White";
-    //     ctx.fillText(this.bossName, 250, 750, 80);
-    //     ctx.fillStyle = "Green";
-    //     ctx.fillRect(240, 760, 800, 20);
-    //     ctx.fillStyle = "Red";
-    //     ctx.fillRect(1040 - 800*(1 - healthPercent), 760, 800*(1 - healthPercent), 20);
-    // }
+    drawBossHealthBar(ctx) {
+        const healthPercent = this.game.boss.health / 25;
+        ctx.font = "30px Arial";
+        // ctx.fillStyle = "Black";
+        // ctx.globalAlpha = 0.6;
+        // ctx.fillRect(240, 720, 100, 50);
+        ctx.globalAlpha = 1;
+        // ctx.fillStyle = "White";
+        // ctx.fillText(this.bossName, 250, 750, 80);
+        ctx.fillStyle = "Green";
+        ctx.fillRect(240, 760, 800, 20);
+        ctx.fillStyle = "Red";
+        ctx.fillRect(1040 - 800*(1 - healthPercent), 760, 800*(1 - healthPercent), 20);
+    }
 
     // drawBGM(ctx) {
     //     ctx.fillStyle = "black";
@@ -354,7 +355,7 @@ class UIManager {
     draw(ctx) {
         this.drawFPS(ctx);
         // if (this.game.roomManager.stage != 0) this.drawTimer(ctx);
-        // if (this.bossHealth != null || this.bossHealth >= 0) this.drawBossHealthBar(ctx);
+        this.drawBossHealthBar(ctx);
         this.drawPlayerHealth(ctx);
         // this.drawBGM(ctx);
         // this.drawNextStage(ctx);

@@ -1,6 +1,6 @@
 class Koishi extends Character {
   constructor(game) {
-    super("enemy", "Koishi", game, 300, 300, 280, game.player.x + 300, game.floor - 280, 100);
+    super("enemy", "Koishi", game, 300, 300, 280, game.player.x + 300, game.floor - 280, 25);
     this.facing = 1;
     this.setController(new KoishiController(this, game));
     this.state = 0;

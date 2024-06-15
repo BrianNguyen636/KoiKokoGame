@@ -3,6 +3,7 @@ class Player extends Character {
     super("player", "Kokoro2", game, 500, 500, 443, (2500 - 300) / 2, game.floor - 443, 5);
     this.facing = 0;
     this.setController(new PlayerController(this, game));
+    this.hurtState = 6;
   }
 
   loadAnimations() {
@@ -11,9 +12,9 @@ class Player extends Character {
     this.makeAnimation(2, 2, 0, 2, 3); //JUMP
     this.makeAnimation(3, 2, 2, 1, 1); //FALL
     this.makeAnimation(4, 3, 0, 5, 9); //ATTACK
-    this.makeAnimation(5, 4, 0, 2, 6); //DASH
-    this.makeAnimation(6, 0, 0, 4, 6); //HURT
-    this.makeAnimation(7, 0, 0, 4, 6); //LOSE
+    this.makeAnimation(5, 4, 0, 5, 9); //DASH
+    this.makeAnimation(6, 5, 0, 1, 1); //HURT
+    this.makeAnimation(7, 6, 0, 1, 1); //LOSE
 
 
   }

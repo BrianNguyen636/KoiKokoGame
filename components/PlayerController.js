@@ -57,8 +57,9 @@ class PlayerController {
       }
     }
     if (this.attackBox) {
-      if (this.attackBox.collide(gameEngine.boss.BB) && !this.damaged) {
+      if (this.attackBox.collide(gameEngine.boss.BB) && !this.damaged) { //BOSS ATTACKED
         this.damaged = true;
+        gameEngine.boss.health--;
       }
     }
     // console.log(this.attackBox);
@@ -101,7 +102,7 @@ class PlayerController {
     this.player.health--;
     this.invuln = 2;
     // this.hurtDuration = 1;
-    this.player.state = 6;
+    this.player.state = this.player.hurtState;
     this.knockback(other);
   }
 
@@ -134,7 +135,7 @@ class PlayerController {
 
   updateState() {
     // ANY LOCK OUT STATES HERE
-    if (this.player.state == 6) { //HURT
+    if (this.player.state == this.player.hurtState) { //HURT
       if (this.yVelocity == 0) this.player.state = 0;
     } else if (this.player.state == 4 && this.animationLock > 0) {//ATTACKING
       this.attackState();
@@ -143,6 +144,7 @@ class PlayerController {
     } else {
       this.animationLock = 0;
       this.attackBox = null;
+      this.dashing = false;
       if (this.grounded) {
         //GROUNDED STATES
         this.player.state = 0;
@@ -166,19 +168,8 @@ class PlayerController {
           this.player.state = 3;
         } else this.player.state = 2;
       }
-      //DASHING
-      this.dashing = false;
-      if (inputManager.C && !inputManager.CHold) { //DASH
-          if (this.airdash || this.grounded) {
-              this.game.CHold = true;
-              if (!this.grounded)this.airdash = false;
-              this.player.state = 5;
-              this.dashDuration = 0.5;
-              this.yVelocity = 0;
-          }
-      }
     }
-    if (this.player.state != 6) { //If not control locked
+    if (this.player.state != this.player.hurtState) { //If not control locked
       //JUMPING
       if ((inputManager.up && !inputManager.upHold)||(inputManager.A && !inputManager.AHold)) {
         //START THE JUMP
@@ -192,6 +183,18 @@ class PlayerController {
       //ATTACKING
       if (inputManager.B && this.animationLock <= 0 && this.dashDuration <= 0) {
         this.attack();
+      }
+      //DASHING
+      if (inputManager.C && !inputManager.CHold && this.dashDuration <= 0 && this.animationLock <= 0) { //DASH
+        if (this.airdash || this.grounded) {
+            this.game.CHold = true;
+            if (!this.grounded)this.airdash = false;
+            this.player.state = 5;
+            this.dashDuration = 0.5;
+            this.yVelocity = 0;
+            this.player.getCurrentAnimation().resetFrames();
+
+        }
       }
     }
   }
@@ -213,7 +216,7 @@ class PlayerController {
       } else {
         this.player.x -= this.dashSpeed * gameEngine.clockTick;
       }
-    } else if (this.player.state != 6){ //NORMAL MOVEMENT
+    } else if (this.player.state != this.player.hurtState){ //NORMAL MOVEMENT
       if (inputManager.right && !inputManager.left) {
         this.player.x += this.speed * gameEngine.clockTick;
       }
@@ -228,7 +231,7 @@ class PlayerController {
     // console.log(this.animationLock);
     if (this.animationLock > 0) this.animationLock -= gameEngine.clockTick;
     //IF PLAYER ISNT IN KNOCKBACK
-    if (this.invuln > 0 && this.player.state != 6) this.invuln -= gameEngine.clockTick;
+    if (this.invuln > 0 && this.player.state != this.player.hurtState) this.invuln -= gameEngine.clockTick;
 
     if (this.attackEffect) {
       this.attackEffect.displayX += this.player.delta.x;
