@@ -7,21 +7,21 @@ class KoishiController {
         this.yVelocity = 0;
         this.gravity = 3000;
 
-        this.phase = 0;
+        this.phase = 0
     }
 
-    death(deathState) {
-        if (this.boss.state < deathState) { //initial death
+    knockback(knockbackState) {
+        if (this.boss.state < knockbackState) { //initial knockback
             // this.setBossTime();
             this.antiGrav = false;
             // this.game.timer.timerRun = false;
             // this.game.combat = false
             // ASSET_MANAGER.playSound("KO");
             this.facePlayer();
-            this.boss.state = deathState;
+            this.boss.state = knockbackState;
             this.xVelocity = this.forwards() * -400; 
             this.yVelocity = -700;
-        } else if (this.boss.state == deathState) {
+        } else if (this.boss.state == knockbackState) {
             if (this.yVelocity >= 0 && this.boss.y == 700 - this.boss.yBoxOffset) {
                 // ASSET_MANAGER.playSound("Thud");
                 this.boss.state++;
@@ -52,9 +52,9 @@ class KoishiController {
 
     attack(state, duration) {
         this.boss.state = state;
-        if (duration == null) {
-            this.boss.animations[this.boss.facing][state].resetFrames();
-            this.attackDuration = this.boss.animations[this.boss.facing][state].totalTime - 1 * this.game.clockTick;
+        this.boss.getCurrentAnimation().resetFrames();
+        if (duration == undefined) {
+            this.attackDuration = this.boss.getCurrentAnimation().totalTime - 1 * this.game.clockTick;
         } else {
             this.attackDuration = duration;
         }
@@ -88,14 +88,8 @@ class KoishiController {
         if (!this.boss.dead()) {
             this.behavior();
         } else {
-            this.death(this.deathState);
+            this.knockback(this.knockbackState);
         }
     };
     
-    behavior(){
-        this.boss.state = 0;
-        // switch(this.phase) {
-
-        // }
-    }
 }

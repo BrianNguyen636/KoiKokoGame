@@ -2,7 +2,7 @@ class Koishi extends Character {
   constructor(game) {
     super("enemy", "Koishi", game, 300, 300, 280, game.player.x + 300, game.floor - 280, 25);
     this.facing = 1;
-    this.setController(new KoishiController(this, game));
+    this.setController(new KoishiPhase0(this, game));
     this.state = 0;
     this.displayX -= game.camera.x;
   }
@@ -27,9 +27,11 @@ class Koishi extends Character {
     this.BB = new BoundingBox(this.x + 105, this.y + 72, 90, 170);
   }
   update(){
-    console.log(this.x + "," + this.y);
+    // console.log(this.x + "," + this.y);
     this.controller.update();
     this.updateBB();
+    this.displayX = this.x - this.game.camera.x;
+    this.displayY = this.y;
   }
   draw(ctx) {
     this.animations[this.facing][this.state].drawFrame(this.game.clockTick, ctx, this.displayX, this.displayY);
