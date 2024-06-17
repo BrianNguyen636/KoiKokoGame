@@ -8,8 +8,14 @@ class Projectile {
         this.calculateVelocity();
         this.spritesheet = ASSET_MANAGER.getAsset("./assets/" + this.name + "Projectiles.png");
         this.updateHitbox();
+        this.displayX = this.x - this.game.camera.x;
+        this.displayY = this.y;
 
     };
+
+    setBehavior(func){
+        this.behavior = func; 
+    }
     calculateVelocity() {
         this.radians = this.angle * Math.PI / 180;
         this.xVelocity = this.speed * Math.cos(this.radians);
@@ -22,27 +28,28 @@ class Projectile {
     update() {
         this.x += this.xVelocity * this.game.clockTick;
         this.y += this.yVelocity * this.game.clockTick;
+        this.displayX += this.xVelocity * this.game.clockTick;
+        this.displayY += this.yVelocity * this.game.clockTick;
+        if (this.x + this.width < 0 || this.x > 2500) {
+            this.removeFromWorld = true;
+        }
+        if (this.y > 1600 || this.y < -800) {
+            this.removeFromWorld = true;
+        }
         this.updateHitbox();
-        this.behavior();
+        if (this.behavior) this.behavior(this);
         if (this.lifespan != null) {
             if (this.lifespan <= 0) {
                 this.removeFromWorld = true;
             } else this.lifespan -= this.game.clockTick;
         }
     };
-    behavior() {
-        if (this.x + this.width < 0 || this.x > 1280) {
-            this.removeFromWorld = true;
-        }
-        if (this.y > 1600 || this.y < -800) {
-            this.removeFromWorld = true;
-        }
-    };
+
 
     draw(ctx) {
         if (!this.removeFromWorld) {
             ctx.save();
-            ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
+            ctx.translate(this.displayX + this.width / 2, this.displayY + this.height / 2);
             ctx.rotate(-this.radians);
             ctx.drawImage(this.spritesheet,
                 0, this.height * this.number,

@@ -33,6 +33,17 @@ class KoishiController {
     forwards() {
         return -(-1 + this.boss.facing * 2);
     }
+    targetPlayerAngle() {
+        let target = {
+            x:this.game.player.BB.midX,
+            y:this.game.player.BB.midY
+        }
+        let pCenter = this.boss.getCenter();
+        let delta_x = (target.x) - (pCenter.x)
+        let delta_y = (target.y) - (pCenter.y)
+        let theta_radians = Math.atan2(delta_y, delta_x)
+        return -theta_radians*180/Math.PI;
+    }
     rollForAttack(attacks) {
         if (attacks < 3) throw new Error("Not enough attacks!");
         let roll = this.lastRoll;

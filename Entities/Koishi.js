@@ -20,6 +20,11 @@ class Koishi extends Character {
     this.makeAnimation(5, 3, 0, 1, 1);
     this.makeAnimation(6, 3, 1, 2, 1);
 
+    //SHOOT
+    this.makeAnimation(7, 4, 0, 1, 1);
+    this.makeAnimation(8, 4, 1, 2, 1);
+
+
   }
   updateBB() {
     // switch (this.state) {

@@ -135,6 +135,34 @@ class PlayerController {
   }
 
   updateState() {
+    if (this.player.state != this.player.hurtState) { //If not control locked
+      //JUMPING
+      if ((inputManager.up && !inputManager.upHold)||(inputManager.A && !inputManager.AHold)) {
+        //START THE JUMP
+        if (this.grounded) {
+          this.jump();
+        } else if (!this.doubleJumped) {
+          this.doubleJumped = true;
+          this.jump();
+        }
+      }
+      //ATTACKING
+      if (inputManager.B && this.animationLock <= 0 && this.dashDuration <= 0) {
+        this.attack();
+      }
+      //DASHING
+      if (inputManager.C && !inputManager.CHold && this.dashDuration <= 0 && this.animationLock <= 0) { //DASH
+        if (this.airdash || this.grounded) {
+          inputManager.CHold = true;
+          if (!this.grounded)this.airdash = false;
+          this.player.state = 5;
+          this.dashDuration = 0.5;
+          this.yVelocity = 0;
+          this.player.getCurrentAnimation().resetFrames();
+
+        }
+      }
+    }
     // ANY LOCK OUT STATES HERE
     if (this.player.state == this.player.hurtState) { //HURT
       if (this.yVelocity == 0) {
@@ -164,43 +192,11 @@ class PlayerController {
         }
       } else {
         //AIRBORNE STATES
-        if (inputManager.right && !inputManager.left) {
-          this.player.facing = 0;
-        }
-        if (inputManager.left && !inputManager.right) {
-          this.player.facing = 1;
-        }
+        if (inputManager.right && !inputManager.left) {this.player.facing = 0;}
+        if (inputManager.left && !inputManager.right) {this.player.facing = 1;}
         if (this.yVelocity >= 0) {
           this.player.state = 3;
         } else this.player.state = 2;
-      }
-    }
-    if (this.player.state != this.player.hurtState) { //If not control locked
-      //JUMPING
-      if ((inputManager.up && !inputManager.upHold)||(inputManager.A && !inputManager.AHold)) {
-        //START THE JUMP
-        if (this.grounded) {
-          this.jump();
-        } else if (!this.doubleJumped) {
-          this.doubleJumped = true;
-          this.jump();
-        }
-      }
-      //ATTACKING
-      if (inputManager.B && this.animationLock <= 0 && this.dashDuration <= 0) {
-        this.attack();
-      }
-      //DASHING
-      if (inputManager.C && !inputManager.CHold && this.dashDuration <= 0 && this.animationLock <= 0) { //DASH
-        if (this.airdash || this.grounded) {
-            this.game.CHold = true;
-            if (!this.grounded)this.airdash = false;
-            this.player.state = 5;
-            this.dashDuration = 0.5;
-            this.yVelocity = 0;
-            this.player.getCurrentAnimation().resetFrames();
-
-        }
       }
     }
   }

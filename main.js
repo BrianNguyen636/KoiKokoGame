@@ -13,6 +13,7 @@ ASSET_MANAGER.queueDownload("./assets/Kokoro2Sprites.png")
 ASSET_MANAGER.queueDownload("./assets/Kokoro2SpritesFlip.png")
 ASSET_MANAGER.queueDownload("./assets/KoishiSprites.png")
 ASSET_MANAGER.queueDownload("./assets/KoishiSpritesFlip.png")
+ASSET_MANAGER.queueDownload("./assets/KoishiProjectiles.png")
 ASSET_MANAGER.queueDownload("./assets/KoishiEffects.png")
 ASSET_MANAGER.queueDownload("./assets/Stage.png")
 
