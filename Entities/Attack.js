@@ -12,7 +12,7 @@ class Hitbox {
 
     update() {
         this.updateBB();
-        console.log(this.x+","+this.y);
+        // console.log(this.x+","+this.y);
         if (this.lifespan <= 0) {
             this.removeFromWorld = true;
         } else this.lifespan -= this.game.clockTick;

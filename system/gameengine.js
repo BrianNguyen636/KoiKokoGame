@@ -16,7 +16,7 @@ class GameEngine {
         this.options = options || {
             debugging: false,
         };
-        this.boxView = false;
+        this.boxView = true;
     };
 
     startScreen(ctx, player) {
@@ -26,6 +26,7 @@ class GameEngine {
                 this.startMenu = true;
                 this.init(ctx, player);
                 this.start();
+                ASSET_MANAGER.playSound("menu_confirm");
             }
         });
         ctx.canvas.addEventListener("keydown", e => {
@@ -34,6 +35,7 @@ class GameEngine {
                 this.startMenu = true;
                 this.init(ctx, player);
                 this.start();
+                ASSET_MANAGER.playSound("menu_confirm");
             }
         });
     }

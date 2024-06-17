@@ -10,7 +10,7 @@ class KoishiPhase0 extends KoishiController {
             this.facePlayer();
 
             // let roll = this.rollForAttack(5);
-            let roll = 2;
+            let roll ;
             switch(roll) {
                 case(0): {
                     this.attack(1);
@@ -99,7 +99,7 @@ class KoishiPhase0 extends KoishiController {
                         speed, angle - 30, null, 'Koishi', 0, this.game));
                     this.game.addEntity(new Projectile(this.boss.x, this.boss.y, 300, 300, 140,140,20,20,
                         speed, angle + 30, null, 'Koishi', 0, this.game));    
-                    this.attack(8, 0.4);
+                    this.attack(8, 1);
                     break;
                 }
                 default: {

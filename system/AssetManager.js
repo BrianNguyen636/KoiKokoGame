@@ -81,11 +81,11 @@ class AssetManager {
     };
 
     playSound(name) {
-        this.playAudio("./assets/Audio/" + name + ".wav");
+        this.playAudio("./assets/audio/" + name + ".wav");
     };
     playBGM(name) {
         if (this.currentSong != null) this.pauseBGM();
-        let path = "./assets/Audio/" + name + ".mp3";
+        let path = "./assets/audio/" + name + ".mp3";
         this.currentSong = path;
         this.playAudio(path);
         this.autoRepeat(path);

@@ -47,9 +47,10 @@ class PlayerController {
     this.attackEffect = effect;
     gameEngine.addEntity(effect);
     this.damaged = false;
+    ASSET_MANAGER.playSound("attack1");
   }
   attackState() {
-    if (this.animationLock < 3/5 * this.player.getCurrentAnimation().totalTime && this.attackBox == null) {
+    if (this.animationLock < 3/5 * this.player.getCurrentAnimation().totalTime && this.attackBox == null && !this.damaged) {
       if (this.player.facing == 0) {
         this.attackBox = new BoundingBox(this.player.x + 194,this.player.y+74,300,400);
       } else {
@@ -60,6 +61,7 @@ class PlayerController {
       if (this.attackBox.collide(gameEngine.boss.BB) && !this.damaged) { //BOSS ATTACKED
         this.damaged = true;
         gameEngine.boss.health--;
+        ASSET_MANAGER.playSound("enemy_damaged");
       }
     }
     // console.log(this.attackBox);
@@ -104,6 +106,7 @@ class PlayerController {
     this.player.state = this.player.hurtState;
     this.knockback(other);
     this.invuln = 2;
+    ASSET_MANAGER.playSound("player_damaged");
 
   }
 
