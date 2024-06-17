@@ -67,10 +67,12 @@ class KoishiController {
         }
         let offset = this.boss.BB.x - this.boss.x
         if (this.boss.BB.x <= 0) { //LEFT COLLISION
-            this.boss.x = 0 - offset - gameEngine.camera.x;
+            this.boss.x = 0 - offset;
+            this.boss.displayX = this.boss.x - gameEngine.camera.x
         }
         if (this.boss.BB.right >= 2500) { //RIGHT COLLISION
-            this.boss.x = 2500 - offset - this.boss.BB.width - gameEngine.camera.x;
+            this.boss.x = 2500 - offset - this.boss.BB.width;
+            this.boss.displayX = this.boss.x - gameEngine.camera.x
         }
     }
 

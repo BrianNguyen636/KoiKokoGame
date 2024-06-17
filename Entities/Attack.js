@@ -12,6 +12,7 @@ class Hitbox {
 
     update() {
         this.updateBB();
+        console.log(this.x+","+this.y);
         if (this.lifespan <= 0) {
             this.removeFromWorld = true;
         } else this.lifespan -= this.game.clockTick;
@@ -22,7 +23,7 @@ class Hitbox {
             let box = this.BB;
             ctx.beginPath();
             ctx.strokeStyle = "red";
-            ctx.rect(box.x, box.y, box.width, box.height);
+            ctx.rect(box.x - this.game.camera.x, box.y, box.width, box.height);
             ctx.stroke();
         }
     };

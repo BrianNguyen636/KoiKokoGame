@@ -1,6 +1,6 @@
 class Player extends Character {
   constructor(game) {
-    super("player", "Kokoro2", game, 500, 500, 443, (2500 - 300) / 2, game.floor - 443, 2);
+    super("player", "Kokoro2", game, 500, 500, 443, (2500 - 300) / 2, game.floor - 443, 5);
     this.facing = 0;
     this.setController(new PlayerController(this, game));
     this.hurtState = 6;
@@ -27,7 +27,7 @@ class Player extends Character {
     //     }
     //     break;
     // }
-    this.BB = new BoundingBox(this.x + 220, this.y + 229, 60, 150);
+    this.BB = new BoundingBox(this.x + 220, this.y + 229, 60, 170);
   }
 
   update() {

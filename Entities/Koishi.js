@@ -15,6 +15,11 @@ class Koishi extends Character {
     this.makeAnimation(2, 1, 2, 3, 1);
     //LAND
     this.makeAnimation(3, 1, 3, 4, 1);
+
+    //SLASH
+    this.makeAnimation(5, 3, 0, 1, 1);
+    this.makeAnimation(6, 3, 1, 2, 1);
+
   }
   updateBB() {
     // switch (this.state) {
@@ -36,8 +41,8 @@ class Koishi extends Character {
   draw(ctx) {
     this.animations[this.facing][this.state].drawFrame(this.game.clockTick, ctx, this.displayX, this.displayY);
     
-    // ctx.fillStyle = 'green';
-    // ctx.fillText(this.x + ", " + this.y, this.displayX, this.displayY + 300, 100);
+    ctx.fillStyle = 'green';
+    ctx.fillText(this.x + ", " + this.y, this.displayX, this.displayY + 300, 100);
 
     if (this.game.boxView) {
       ctx.strokeStyle = "yellow";
