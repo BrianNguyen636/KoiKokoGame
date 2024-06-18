@@ -2,13 +2,18 @@ Koishi Attacks:
 
 Phase1:
 -Knife swing
--Heart Helix shot
+-Heart spread shot
 -jumps
 -Spellcard: Rekindled "Embers of Love": Ricochet projectiles.
 
 Phase2:
 -Double knife swing
--3 consecutive heart helix shots
+-3 consecutive heart shots
 -360 spread shot
 -jumps
 -Spellcard: Depths "Genetics of the Subconscious": Jumping with double wave spread shots.
+
+Phase3:
+-Double Knife Swing
+-Fade away behind knife swing
+-3 consecutive heart shots

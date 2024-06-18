@@ -52,6 +52,7 @@ class GameEngine {
         this.addEntity(kosher);
         this.boss = kosher;
         this.uiManager = new UIManager(this);
+        this.menuController = new MenuController(this);
     };
 
     start() {
@@ -64,6 +65,7 @@ class GameEngine {
 
     reset() {
         this.init(this.ctx, new Player(this));
+        this.paused = false;
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     }
 
@@ -110,15 +112,20 @@ class GameEngine {
         }
 
         this.camera.update();
+
+        if (inputManager.pauseButton && !inputManager.pauseButtonHold) {
+            inputManager.pauseButtonHold = true;
+            this.pause();
+        }
     };
 
 
     pause() {
-        if (!this.paused && !this.startMenu) {
+        if (!this.paused) {
             this.paused = true;
             this.menuController.selected = 0;
-            ASSET_MANAGER.playSound("Pause");
-            ASSET_MANAGER.pauseBGM();
+            ASSET_MANAGER.playSound("pause");
+            // ASSET_MANAGER.pauseBGM();
         }
     };
 
@@ -126,6 +133,8 @@ class GameEngine {
         inputManager.update();
         if (this.mainMenu) {
 
+        } if (this.paused) {
+            this.menuController.pauseMenu();
         } else { //NORMAL GAME
             this.clockTick = this.timer.tick();
             this.update();

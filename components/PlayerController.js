@@ -98,13 +98,14 @@ class PlayerController {
   }
 
   hurt(other) {
-    this.player.health--;
-    // this.hurtDuration = 1;
-    this.player.state = this.player.hurtState;
-    this.knockback(other);
-    this.invuln = 2;
-    ASSET_MANAGER.playSound("player_damaged");
-
+    if (this.invuln <= 0) {
+      this.player.health--;
+      // this.hurtDuration = 1;
+      this.player.state = this.player.hurtState;
+      this.knockback(other);
+      this.invuln = 2;
+      ASSET_MANAGER.playSound("player_damaged");
+    }
   }
 
   checkCollisions(){
@@ -135,6 +136,7 @@ class PlayerController {
   }
 
   updateState() {
+    
     if (this.player.state != this.player.hurtState) { //If not control locked
       //JUMPING
       if ((inputManager.up && !inputManager.upHold)||(inputManager.A && !inputManager.AHold)) {

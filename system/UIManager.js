@@ -17,24 +17,26 @@ class UIManager {
     // }
 
 
-    // drawPause(ctx) {
-    //     let selected = this.game.menuController.selected;
-    //     ctx.font = "bold 100px serif";
-    //     ctx.fillStyle = "white";
-    //     ctx.strokeStyle = "black";
-    //     ctx.fillText("PAUSED", 450, 300);
-    //     ctx.strokeText("PAUSED", 450, 300);
-    //     ctx.font = "60px serif";
-    //     if (selected == 0) {ctx.fillStyle = "green";} else ctx.fillStyle = "white";
-    //     ctx.fillText("Resume", 470, 400);
-    //     ctx.strokeText("Resume", 470, 400);
-    //     if (selected == 1) {ctx.fillStyle = "green";} else ctx.fillStyle = "white";
-    //     ctx.fillText("Restart", 470, 460);
-    //     ctx.strokeText("Restart", 470, 460);
-    //     if (selected == 2) {ctx.fillStyle = "green";} else ctx.fillStyle = "white";
-    //     ctx.fillText("Main Menu", 470, 520);
-    //     ctx.strokeText("Main Menu", 470, 520);
-    // }
+    drawPause(ctx) {
+        let selected = this.game.menuController.selected;
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/AltScreen.png"),
+            0,0, 
+            1280,800);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/paused.png"),
+            (1280 - 400) / 2, 50, 
+            400, 200);
+        let icons = ['resume','restart','mainmenu'];
+        for (let i = 0; i < icons.length; i++) {
+            ctx.drawImage(ASSET_MANAGER.getAsset("./assets/"+ icons[i] + ".png"),
+                (1280 - 300) / 2, 300 + 150 * i, 
+                300, 150);
+            if (selected == i) {
+                ctx.drawImage(ASSET_MANAGER.getAsset("./assets/arrow.png"),
+                    (1280 - 300) / 2 + 300, 300 + 150 * i, 
+                    150, 150);
+            }
+        }
+    }
 
     // drawGameOver(ctx) {
     //     let selected = this.game.menuController.selected;

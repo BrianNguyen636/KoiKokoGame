@@ -9,8 +9,6 @@ ASSET_MANAGER.queueDownload("./assets/KokoroSprites.png")
 ASSET_MANAGER.queueDownload("./assets/KokoroSpritesFlip.png")
 ASSET_MANAGER.queueDownload("./assets/KokoroEffects.png")
 ASSET_MANAGER.queueDownload("./assets/KokoroGhost.png")
-ASSET_MANAGER.queueDownload("./assets/Kokoro2Sprites.png")
-ASSET_MANAGER.queueDownload("./assets/Kokoro2SpritesFlip.png")
 ASSET_MANAGER.queueDownload("./assets/KoishiSprites.png")
 ASSET_MANAGER.queueDownload("./assets/KoishiSpritesFlip.png")
 ASSET_MANAGER.queueDownload("./assets/KoishiProjectiles.png")
@@ -20,6 +18,11 @@ ASSET_MANAGER.queueDownload("./assets/Stage.png")
 let audioFiles = ['attack1', 'enemy_damaged', 'player_damaged','menu_confirm','menu_change_option','pause']
 audioFiles.forEach(e => {
 	ASSET_MANAGER.queueDownload("./assets/audio/" + e + ".wav");
+})
+
+let uiFiles = ['mainmenu','paused','resume','arrow','restart','AltScreen','Title'];
+uiFiles.forEach(e => {
+	ASSET_MANAGER.queueDownload("./assets/" + e + ".png");
 })
 
 

@@ -125,7 +125,7 @@ class InputManager {
                     case "C": that.C = true; break;
                     case "Pause": that.pauseButton = true; break;
                 }
-                // console.log(e.code);
+                console.log(e.code);
             } else if (that.keyBinding) {
                 that.key = e.code;
                 that.keyPress = true;
