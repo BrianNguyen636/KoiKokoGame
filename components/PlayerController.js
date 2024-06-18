@@ -155,6 +155,8 @@ class PlayerController {
       //DASHING
       if (inputManager.C && !inputManager.CHold && this.dashDuration <= 0 && this.animationLock <= 0) { //DASH
         if (this.airdash || this.grounded) {
+          if (inputManager.right && !inputManager.left) {this.player.facing = 0;}
+          if (inputManager.left && !inputManager.right) {this.player.facing = 1;}
           inputManager.CHold = true;
           if (!this.grounded)this.airdash = false;
           this.player.state = 5;

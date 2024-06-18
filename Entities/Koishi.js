@@ -1,6 +1,6 @@
 class Koishi extends Character {
   constructor(game) {
-    super("enemy", "Koishi", game, 300, 300, 280, game.player.x + 300, game.floor - 280, 25);
+    super("enemy", "Koishi", game, 300, 300, 280, game.player.x + 500, game.floor - 280, 5);
     this.facing = 1;
     this.setController(new KoishiPhase0(this, game));
     this.state = 0;
@@ -12,9 +12,9 @@ class Koishi extends Character {
     this.makeAnimation(0, 0, 0, 3, 6);
     //JUMP
     this.makeAnimation(1, 1, 0, 3, 9);
-    this.makeAnimation(2, 1, 2, 2, 1);
+    this.makeAnimation(2, 1, 2, 1, 1);
     //LAND
-    this.makeAnimation(3, 1, 3, 3, 1);
+    this.makeAnimation(3, 1, 3, 1, 1);
     //KNOCKBACK
     this.makeAnimation(4, 2, 0, 0, 1);
 
@@ -25,6 +25,12 @@ class Koishi extends Character {
     //SHOOT
     this.makeAnimation(7, 4, 0, 0, 1);
     this.makeAnimation(8, 4, 1, 1, 1);
+
+    //SPIN
+    this.makeAnimation(9, 5, 0, 4, 9);
+
+    //POSE
+    this.makeAnimation(10, 6, 0, 1, 1);
 
     //LOSE
     this.makeAnimation(20, 2, 1, 1, 1);
@@ -47,7 +53,7 @@ class Koishi extends Character {
   }
   update(){
     // console.log(this.x + "," + this.y);
-    console.log(this.state);
+    // console.log(this.state);
     this.controller.update();
     this.updateBB();
     this.displayX = this.x - this.game.camera.x;

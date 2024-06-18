@@ -13,6 +13,8 @@ ASSET_MANAGER.queueDownload("./assets/KoishiSprites.png")
 ASSET_MANAGER.queueDownload("./assets/KoishiSpritesFlip.png")
 ASSET_MANAGER.queueDownload("./assets/KoishiProjectiles.png")
 ASSET_MANAGER.queueDownload("./assets/KoishiEffects.png")
+ASSET_MANAGER.queueDownload("./assets/KoishiCutIn.png")
+
 ASSET_MANAGER.queueDownload("./assets/Stage.png")
 
 let audioFiles = ['attack1', 'enemy_damaged', 'player_damaged','menu_confirm','menu_change_option','pause']

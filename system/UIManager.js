@@ -10,11 +10,42 @@ class UIManager {
         this.fps = 0;
         this.frameCount = 0;
         // this.tip = "error";
+        this.cutInDuration = 0;
+
     }
     // update() {
     //     this.playerHealth = this.game.player.health;
     //     this.bossHealth = this.game.boss.health;
     // }
+    setCutIn(duration) {
+        this.cutInAlpha = 0;
+        this.cutInX = 1280;
+        this.cutInY = 800;
+        this.cutInDuration = duration;
+    }
+    drawCutIn(ctx) {
+        console.log(this.cutInX);
+        this.cutInDuration -= this.game.clockTick;
+        if (this.cutInDuration > 0.5 && this.cutInX <= 450) {
+            this.cutInX -= this.game.clockTick * 100;
+        } else {
+            this.cutInX -= this.game.clockTick * 2000;
+        }
+        if (this.cutInDuration > 0.5 && this.cutInY <= 300) {
+            this.cutInY -= this.game.clockTick * 100;
+        } else {
+            this.cutInY -= this.game.clockTick * 2000;
+        }
+        ctx.globalAlpha = 0.25;
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/KoishiCutIn.png"),
+            this.cutInX, 700 - 478, 
+            514,478);
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = 'white';
+        ctx.font = '60px cursive'
+        ctx.fillText("Spellcard Declaration!", 600, this.cutInY, 600);
+
+    }
 
 
     drawPause(ctx) {
@@ -361,6 +392,7 @@ class UIManager {
         // if (this.game.roomManager.stage != 0) this.drawTimer(ctx);
         this.drawBossHealthBar(ctx);
         this.drawPlayerHealth(ctx);
+        if (this.cutInDuration > 0) this.drawCutIn(ctx);
         // this.drawBGM(ctx);
         // this.drawNextStage(ctx);
         // if (!this.game.paused) this.drawDialog(ctx);

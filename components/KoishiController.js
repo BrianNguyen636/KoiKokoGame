@@ -12,7 +12,9 @@ class KoishiController {
     }
 
     knockback(knockbackState) {
-        if (this.boss.state < knockbackState) { //initial knockback
+        if (this.boss.state != knockbackState) { //initial knockback
+            this.attackDuration = 0;
+            this.timer = 0;
             // this.setBossTime();
             this.antiGrav = false;
             // this.game.timer.timerRun = false;
@@ -21,13 +23,20 @@ class KoishiController {
             this.facePlayer();
             this.boss.state = knockbackState;
             this.xVelocity = this.forwards() * -400; 
-            this.yVelocity = -1000;
+            this.yVelocity = -1100;
         } else if (this.boss.state == knockbackState) {
             if (this.yVelocity >= 0 && this.boss.y == 700 - this.boss.yBoxOffset) {
                 // ASSET_MANAGER.playSound("Thud");
                 this.xVelocity = 0;
-                if (this.phase < 5) {
-                    this.boss.state = 3;
+                if (this.phase < 4) {
+                    
+                    switch(this.phase) {
+                        case(0): { 
+                            this.boss.setController(new KoishiPhase1(this.boss, this.game));
+                        } break;
+                    }
+                    this.boss.health = 25;
+
                 } else {
                     this.boss.state = this.loseState;
                     this.game.victory = true;
@@ -108,12 +117,12 @@ class KoishiController {
         this.boss.x += this.xVelocity * this.game.clockTick;
 
         this.collisions();
-
         if (!this.boss.dead()) {
             this.behavior();
         } else {
-            if (!this.game.victory) this.knockback(this.knockbackState);
+            this.knockback(this.knockbackState);
         }
+
     };
     
 }
