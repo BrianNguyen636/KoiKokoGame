@@ -50,18 +50,15 @@ class PlayerController {
     ASSET_MANAGER.playSound("attack1");
   }
   attackState() {
-    if (this.animationLock < 3/5 * this.player.getCurrentAnimation().totalTime && this.attackBox == null && !this.damaged) {
+    if (this.animationLock < 3/5 * this.player.getCurrentAnimation().totalTime && !this.damaged) {
       if (this.player.facing == 0) {
         this.attackBox = new BoundingBox(this.player.x + 194,this.player.y+74,300,400);
       } else {
         this.attackBox = new BoundingBox(this.player.x +(500 - 194 - 300),this.player.y+74,300,400);
       }
-    }
-    if (this.attackBox) {
-      if (this.attackBox.collide(gameEngine.boss.BB) && !this.damaged) { //BOSS ATTACKED
+      if (this.attackBox.collide(gameEngine.boss.BB)) { //BOSS ATTACKED
+        gameEngine.boss.hurt();
         this.damaged = true;
-        gameEngine.boss.health--;
-        ASSET_MANAGER.playSound("enemy_damaged");
       }
     }
     // console.log(this.attackBox);
@@ -129,7 +126,7 @@ class PlayerController {
     }
     //ENEMY COLLISIONS
     gameEngine.entities.forEach(e=> {
-      if (e.id == 'enemy' || e.id == 'attack') {
+      if (e.id == 'attack') {
         if (this.player.BB.collide(e.BB) && this.invuln <= 0) {
             this.hurt(e);
         }
@@ -242,10 +239,10 @@ class PlayerController {
       this.attackEffect.displayX += this.player.delta.x;
       this.attackEffect.displayY += this.player.delta.y;
     }
-    if (this.attackBox) {
-      this.attackBox.x += this.player.delta.x;
-      this.attackBox.y += this.player.delta.y;
-    }
+    // if (this.attackBox) {
+    //   this.attackBox.x += this.player.delta.x;
+    //   this.attackBox.y += this.player.delta.y;
+    // }
     if (this.player.state != this.player.hurtState + 1) {
       this.updateState();
       this.updateMovement();

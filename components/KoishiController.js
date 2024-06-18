@@ -6,7 +6,8 @@ class KoishiController {
         this.xVelocity = 0;
         this.yVelocity = 0;
         this.gravity = 3000;
-
+        this.knockbackState = 4;
+        this.loseState = 20;
         this.phase = 0
     }
 
@@ -20,12 +21,17 @@ class KoishiController {
             this.facePlayer();
             this.boss.state = knockbackState;
             this.xVelocity = this.forwards() * -400; 
-            this.yVelocity = -700;
+            this.yVelocity = -1000;
         } else if (this.boss.state == knockbackState) {
             if (this.yVelocity >= 0 && this.boss.y == 700 - this.boss.yBoxOffset) {
                 // ASSET_MANAGER.playSound("Thud");
-                this.boss.state++;
                 this.xVelocity = 0;
+                if (this.phase < 5) {
+                    this.boss.state = 3;
+                } else {
+                    this.boss.state = this.loseState;
+                    this.game.victory = true;
+                }
             }
         }
     };
@@ -45,12 +51,14 @@ class KoishiController {
         return -theta_radians*180/Math.PI;
     }
     rollForAttack(attacks) {
-        if (attacks < 3) throw new Error("Not enough attacks!");
+        // if (attacks < 3) throw new Error("Not enough attacks!");
         let roll = this.lastRoll;
-        while (roll == this.lastRoll || roll == this.lastLastRoll) {
+        while (roll == this.lastRoll
+            //  || roll == this.lastLastRoll
+            ) {
             roll = Math.floor(Math.random() * attacks);
         }
-        this.lastLastRoll = this.lastRoll;
+        // this.lastLastRoll = this.lastRoll;
         this.lastRoll = roll;
         return roll;
     }
@@ -85,6 +93,9 @@ class KoishiController {
             this.boss.x = 2500 - offset - this.boss.BB.width;
             this.boss.displayX = this.boss.x - gameEngine.camera.x
         }
+        if (this.boss.BB.collide(gameEngine.player.BB) && !this.boss.dead()) {
+            gameEngine.player.controller.hurt(this.boss);
+        }
     }
 
     update() {
@@ -101,7 +112,7 @@ class KoishiController {
         if (!this.boss.dead()) {
             this.behavior();
         } else {
-            this.knockback(this.knockbackState);
+            if (!this.game.victory) this.knockback(this.knockbackState);
         }
     };
     

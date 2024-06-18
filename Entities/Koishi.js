@@ -9,22 +9,25 @@ class Koishi extends Character {
 
   loadAnimations() {
     //IDLE
-    this.makeAnimation(0, 0, 0, 3, 3);
+    this.makeAnimation(0, 0, 0, 3, 6);
     //JUMP
     this.makeAnimation(1, 1, 0, 3, 9);
-    this.makeAnimation(2, 1, 2, 3, 1);
+    this.makeAnimation(2, 1, 2, 2, 1);
     //LAND
-    this.makeAnimation(3, 1, 3, 4, 1);
+    this.makeAnimation(3, 1, 3, 3, 1);
+    //KNOCKBACK
+    this.makeAnimation(4, 2, 0, 0, 1);
 
     //SLASH
-    this.makeAnimation(5, 3, 0, 1, 1);
-    this.makeAnimation(6, 3, 1, 2, 1);
+    this.makeAnimation(5, 3, 0, 0, 1);
+    this.makeAnimation(6, 3, 1, 1, 1);
 
     //SHOOT
-    this.makeAnimation(7, 4, 0, 1, 1);
-    this.makeAnimation(8, 4, 1, 2, 1);
+    this.makeAnimation(7, 4, 0, 0, 1);
+    this.makeAnimation(8, 4, 1, 1, 1);
 
-
+    //LOSE
+    this.makeAnimation(20, 2, 1, 1, 1);
   }
   updateBB() {
     // switch (this.state) {
@@ -36,8 +39,15 @@ class Koishi extends Character {
     // }
     this.BB = new BoundingBox(this.x + 105, this.y + 72, 90, 170);
   }
+  hurt() {
+    if (!this.dead()) {
+      this.health--;
+      ASSET_MANAGER.playSound("enemy_damaged");
+    }
+  }
   update(){
     // console.log(this.x + "," + this.y);
+    console.log(this.state);
     this.controller.update();
     this.updateBB();
     this.displayX = this.x - this.game.camera.x;

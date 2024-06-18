@@ -6,17 +6,18 @@ class KoishiPhase0 extends KoishiController {
         this.attackEffect;
     }
     behavior() {
-        if (this.timer <= 0 && this.attackDuration <= 0 && this.boss.state == 0) { //Walk from Idle timer
+        if (this.timer <= 0 && this.attackDuration <= 0 && this.boss.state == 0) { //Idle timer
             this.facePlayer();
 
-            // let roll = this.rollForAttack(5);
-            let roll ;
+            let roll = this.rollForAttack(3);
+            // let roll = 2;
             switch(roll) {
                 case(0): {
                     this.attack(1);
                     // ASSET_MANAGER.playSound("Whoosh");
                     this.yVelocity = -1500;
-                    this.xVelocity = (1 - this.boss.facing * 2) * 800;
+                    let variance = Math.floor(Math.random() * 400);
+                    this.xVelocity = (1 - this.boss.facing * 2) * (400 + variance);
                     break;
                 }
                 case(1):{
@@ -88,11 +89,6 @@ class KoishiPhase0 extends KoishiController {
                 case(7): {
                     let speed = 700;
                     let angle = this.targetPlayerAngle();
-                    // if (this.boss.facing == 0) {
-                    //     angle = 0;
-                    // } else {
-                    //     angle = 180
-                    // }
                     this.game.addEntity(new Projectile(this.boss.x, this.boss.y, 300, 300, 140,140,20,20,
                         speed, angle, null, 'Koishi', 0, this.game));
                     this.game.addEntity(new Projectile(this.boss.x, this.boss.y, 300, 300, 140,140,20,20,
