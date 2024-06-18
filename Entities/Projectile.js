@@ -12,10 +12,6 @@ class Projectile {
         this.displayY = this.y;
 
     };
-
-    setBehavior(func){
-        this.behavior = func; 
-    }
     calculateVelocity() {
         this.radians = this.angle * Math.PI / 180;
         this.xVelocity = this.speed * Math.cos(this.radians);
@@ -37,14 +33,14 @@ class Projectile {
             this.removeFromWorld = true;
         }
         this.updateHitbox();
-        if (this.behavior) this.behavior(this);
+        this.behavior();
         if (this.lifespan != null) {
             if (this.lifespan <= 0) {
                 this.removeFromWorld = true;
             } else this.lifespan -= this.game.clockTick;
         }
     };
-
+    behavior(){};
 
     draw(ctx) {
         if (!this.removeFromWorld) {

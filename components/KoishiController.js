@@ -13,6 +13,8 @@ class KoishiController {
 
     knockback(knockbackState) {
         if (this.boss.state != knockbackState) { //initial knockback
+            this.boss.invuln = true;
+            this.game.clearProjectiles();
             this.attackDuration = 0;
             this.timer = 0;
             // this.setBossTime();

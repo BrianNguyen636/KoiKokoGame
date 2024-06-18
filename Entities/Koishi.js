@@ -5,6 +5,7 @@ class Koishi extends Character {
     this.setController(new KoishiPhase0(this, game));
     this.state = 0;
     this.displayX -= game.camera.x;
+    this.invuln = false;
   }
 
   loadAnimations() {
@@ -46,7 +47,7 @@ class Koishi extends Character {
     this.BB = new BoundingBox(this.x + 105, this.y + 72, 90, 170);
   }
   hurt() {
-    if (!this.dead()) {
+    if (!this.dead() && !this.invuln) {
       this.health--;
       ASSET_MANAGER.playSound("enemy_damaged");
     }

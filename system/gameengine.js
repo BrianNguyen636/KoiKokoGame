@@ -72,6 +72,13 @@ class GameEngine {
     addEntity(entity) {
         this.entities.push(entity);
     };
+    clearProjectiles(){
+        this.entities.forEach(e => {
+            if (e.id == 'projectile') {
+                e.removeFromWorld = true;
+            }
+        })
+    }
 
     draw() {
         // Clear the whole canvas with transparent color (rgba(0, 0, 0, 0))
