@@ -8,15 +8,14 @@ class KoishiController {
         this.gravity = 3000;
         this.knockbackState = 4;
         this.loseState = 20;
-        this.phase = 0
     }
 
     knockback(knockbackState) {
-        if (this.boss.state != knockbackState) { //initial knockback
+        if (this.boss.state != knockbackState && this.boss.state != this.loseState) { //initial knockback
             this.boss.invuln = true;
             this.game.clearProjectiles();
-            this.attackDuration = 0;
-            this.timer = 0;
+            this.attackDuration = 4;
+            this.timer = 4;
             // this.setBossTime();
             this.antiGrav = false;
             // this.game.timer.timerRun = false;
@@ -30,11 +29,12 @@ class KoishiController {
             if (this.yVelocity >= 0 && this.boss.y == 700 - this.boss.yBoxOffset) {
                 // ASSET_MANAGER.playSound("Thud");
                 this.xVelocity = 0;
-                if (this.phase < 4) {
+                if (this.boss.phase < 1) {
                     
-                    switch(this.phase) {
+                    switch(this.boss.phase) {
                         case(0): { 
                             this.boss.setController(new KoishiPhase1(this.boss, this.game));
+                            this.boss.phase = 1;
                         } break;
                     }
                     this.boss.health = 25;

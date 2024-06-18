@@ -6,6 +6,7 @@ class Koishi extends Character {
     this.state = 0;
     this.displayX -= game.camera.x;
     this.invuln = false;
+    this.phase = 0;
   }
 
   loadAnimations() {
@@ -17,14 +18,14 @@ class Koishi extends Character {
     //LAND
     this.makeAnimation(3, 1, 3, 1, 1);
     //KNOCKBACK
-    this.makeAnimation(4, 2, 0, 0, 1);
+    this.makeAnimation(4, 2, 0, 1, 1);
 
     //SLASH
-    this.makeAnimation(5, 3, 0, 0, 1);
+    this.makeAnimation(5, 3, 0, 1, 1);
     this.makeAnimation(6, 3, 1, 1, 1);
 
     //SHOOT
-    this.makeAnimation(7, 4, 0, 0, 1);
+    this.makeAnimation(7, 4, 0, 1, 1);
     this.makeAnimation(8, 4, 1, 1, 1);
 
     //SPIN

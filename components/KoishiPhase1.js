@@ -72,14 +72,15 @@ class KoishiPhase1 extends KoishiController {
                     break;
                 }
                 case(7): {
-                    this.attack(8,1);
-                    let random = Math.floor(Math.random() * 3);
+                    this.attack(8,1.0);
+                    let random = this.rollForAttack(3);
                     let angle = 0 + this.boss.facing * 180;
                     switch(random){
                         case 0: angle += 40; break;
-                        case 1: angle -= 40;
+                        case 1: angle += 60; break;
                     }
                     this.game.addEntity(new Ember(this.boss.x, this.boss.y, angle));
+                    this.game.addEntity(new Ember(this.boss.x, this.boss.y, angle + 180));
                     break;
                 }
 

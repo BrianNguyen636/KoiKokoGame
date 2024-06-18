@@ -98,7 +98,7 @@ class PlayerController {
   }
 
   hurt(other) {
-    if (this.invuln <= 0) {
+    if (this.invuln <= 0 && !this.player.dead()) {
       this.player.health--;
       // this.hurtDuration = 1;
       this.player.state = this.player.hurtState;
