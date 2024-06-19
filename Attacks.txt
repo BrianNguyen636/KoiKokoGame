@@ -20,5 +20,3 @@ Phase3:
 -Jump spread shot
 -Jump fade away spread shot
 -Spellcard:
-
--Spellcard:
