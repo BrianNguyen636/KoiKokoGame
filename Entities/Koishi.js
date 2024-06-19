@@ -54,6 +54,11 @@ class Koishi extends Character {
     if (!this.dead() && !this.invuln) {
       this.health--;
       ASSET_MANAGER.playSound("enemy_damaged");
+      if (this.game.player.x < this.x) {
+        this.game.addEntity(new Effect(this.displayX + 40, this.displayY - 40, 'Hit', 300, 2, 3, 12));
+      } else {
+        this.game.addEntity(new Effect(this.displayX - 40, this.displayY - 40, 'Hit', 300, 1, 3, 12));
+      }
     }
   }
   update(){

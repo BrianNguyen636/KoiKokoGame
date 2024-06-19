@@ -105,6 +105,7 @@ class PlayerController {
       this.knockback(other);
       this.invuln = 2;
       ASSET_MANAGER.playSound("player_damaged");
+      this.game.addEntity(new Effect(this.player.displayX + 100, this.player.displayY + 100, 'Hit', 300, 0, 3, 12));
     }
   }
 
