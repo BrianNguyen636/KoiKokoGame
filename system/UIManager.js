@@ -171,7 +171,7 @@ class UIManager {
     // }
     
     drawBossHealthBar(ctx) {
-        const healthPercent = this.game.boss.health / 25;
+        const healthPercent = this.game.boss.health / this.game.boss.maxHealth;
         ctx.font = "30px Arial";
         // ctx.fillStyle = "Black";
         // ctx.globalAlpha = 0.6;

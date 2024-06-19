@@ -6,13 +6,17 @@ class KoishiPhase2 extends KoishiController {
         this.boss.phase = 2;
         this.boss.state = 3;
         this.attackEffect;
+        this.attackCount = 0;
+        this.shotCount = 0;
+        this.shotTimer = 0;
+        this.angle;
     }
     behavior() {
         if (this.timer <= 0 && this.attackDuration <= 0 && this.boss.state == 0) { //Idle timer
             this.facePlayer();
 
-            let roll = this.rollForAttack(4);
-            // let roll = 2;
+            // let roll = this.rollForAttack(4);
+            let roll = 2;
             switch(roll) {
                 case(0): {
                     this.attack(1);
@@ -27,6 +31,9 @@ class KoishiPhase2 extends KoishiController {
                 }
                 case(2):{
                     this.attack(7,.5); break;
+                }
+                case(3):{
+                    break;
                 }
             }
         }
@@ -61,6 +68,18 @@ class KoishiPhase2 extends KoishiController {
                     this.attackEffect.displayX += this.xVelocity * gameEngine.clockTick;
                     break;
                 }
+                case(8): {
+                    let speed = 1000;
+                    if (this.shotTimer <= 0 && this.shotCount < 4) {
+                        this.game.addEntity(new Projectile(this.boss.x, this.boss.y, 300, 300, 140,140,20,20,
+                            speed, this.angle, null, 'Koishi', 0, this.game));
+                        this.shotTimer = 0.05;
+                        this.shotCount++;
+                    } else {
+                        this.shotTimer -= this.game.clockTick;
+                    }
+                    break;
+                }
             }
         }
         if (this.attackDuration <= 0 && this.boss.state > 0) { //What happens after attack
@@ -88,20 +107,42 @@ class KoishiPhase2 extends KoishiController {
                     this.game.addEntity(this.attackEffect);
                     break;
                 }
+                case(6): {
+                    if (this.attackCount < 1) { //DOUBLE SWING
+                        this.attack(5,.4);
+                        this.facePlayer();
+                        this.attackCount++;
+                    } else {
+                        this.timer = 1;
+                        this.boss.state = 0;
+                        this.attackCount = 0;
+                    }
+                    break;
+                }
                 case(7): {
-                    let speed = 700;
-                    let angle = this.targetPlayerAngle();
-                    this.game.addEntity(new Projectile(this.boss.x, this.boss.y, 300, 300, 140,140,20,20,
-                        speed, angle, null, 'Koishi', 0, this.game));
-                    this.game.addEntity(new Projectile(this.boss.x, this.boss.y, 300, 300, 140,140,20,20,
-                        speed, angle - 30, null, 'Koishi', 0, this.game));
-                    this.game.addEntity(new Projectile(this.boss.x, this.boss.y, 300, 300, 140,140,20,20,
-                        speed, angle + 30, null, 'Koishi', 0, this.game));    
-                    this.attack(8, 1);
+                    this.angle = this.targetPlayerAngle();
+                    this.attack(8, 0.3);
+                    this.shotCount = 0;
+                    this.shotTimer = 0;
+                    break;
+                }
+                case(8): {
+                    if (this.attackCount < 2) { //Triple shot
+                        this.attack(7,.2);
+                        this.facePlayer();
+                        this.attackCount++;
+                    } else {
+                        this.timer = 1;
+                        this.boss.state = 0;
+                        this.attackCount = 0;
+                        this.shotCount = 0;
+                        this.shotTimer = 0;
+                    }
                     break;
                 }
                 default: {
                     // this.effectSpawn = false;
+                    this.attackCount = 0;
                     this.boss.invuln = false;
                     this.shotTimer = 0;
                     this.shotCount = 0;

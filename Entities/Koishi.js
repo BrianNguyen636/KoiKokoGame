@@ -1,12 +1,15 @@
 class Koishi extends Character {
   constructor(game) {
-    super("enemy", "Koishi", game, 300, 300, 280, game.player.x + 500, game.floor - 280, 5);
+    super("enemy", "Koishi", game, 300, 300, 280, game.player.x + 500, game.floor - 280, 25);
     this.facing = 1;
-    this.setController(new KoishiPhase0(this, game));
+    this.setController(new KoishiPhase2(this, game));
     this.state = 0;
     this.displayX -= game.camera.x;
     this.invuln = false;
     this.phase = 0;
+
+
+    this.health = 5;
   }
 
   loadAnimations() {

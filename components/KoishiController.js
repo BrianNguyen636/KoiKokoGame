@@ -39,7 +39,7 @@ class KoishiController {
                             this.boss.setController(new KoishiPhase2(this.boss, this.game));
                         } break;
                     }
-                    this.boss.health = 1;
+                    this.boss.health = this.boss.maxHealth;
 
                 } else {
                     this.boss.state = this.loseState;

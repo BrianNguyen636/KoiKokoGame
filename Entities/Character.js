@@ -15,6 +15,7 @@ class Character {
         this.facing = 0;
         this.displayX = this.x;
         this.displayY = this.y;
+        this.maxHealth = this.health;
     };
     setController(controller) {this.controller = controller};
 
