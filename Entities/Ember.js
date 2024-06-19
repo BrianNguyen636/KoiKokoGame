@@ -20,8 +20,7 @@ class Ember extends Projectile {
             }
         }
         if (this.trailTimer <= 0) {
-            this.game.addEntity(new Projectile(this.x, this.y, this.width, this.height, 135, 135,
-                30,30,0,0,0.15, 'Koishi', 4, this.game
+            this.game.addEntity(new Projectile(this.x, this.y, this.width, this.height, 145,145,10,10,0,0,0.15, 'Koishi', 4, this.game
             ));
             this.trailTimer = 0.05;
         } else {

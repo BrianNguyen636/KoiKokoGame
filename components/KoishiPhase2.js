@@ -15,8 +15,8 @@ class KoishiPhase2 extends KoishiController {
         if (this.timer <= 0 && this.attackDuration <= 0 && this.boss.state == 0) { //Idle timer
             this.facePlayer();
 
-            // let roll = this.rollForAttack(4);
-            let roll = 2;
+            let roll = this.rollForAttack(4);
+            // let roll = 3;
             switch(roll) {
                 case(0): {
                     this.attack(1);
@@ -33,6 +33,7 @@ class KoishiPhase2 extends KoishiController {
                     this.attack(7,.5); break;
                 }
                 case(3):{
+                    this.attack(9, 2);
                     break;
                 }
             }
@@ -77,6 +78,23 @@ class KoishiPhase2 extends KoishiController {
                         this.shotCount++;
                     } else {
                         this.shotTimer -= this.game.clockTick;
+                    }
+                    break;
+                }
+                case(9): {
+                    if (this.attackDuration < 1 && this.attackDuration > 0.5) {
+                        if (this.shotTimer <= 0) {
+                            let speed = 750;
+                            let angle = -90;
+                            this.game.addEntity(new Projectile(this.boss.x, this.boss.y, 300, 300, 145,145,10,10,
+                                speed, angle + this.shotCount * 20, null, 'Koishi', 2, this.game));
+                            this.game.addEntity(new Projectile(this.boss.x, this.boss.y, 300, 300, 145,145,10,10,
+                                speed, angle - this.shotCount * 20, null, 'Koishi', 3, this.game));
+                            this.shotTimer = 0.05;
+                            this.shotCount++;
+                        } else {
+                            this.shotTimer -= this.game.clockTick;
+                        }
                     }
                     break;
                 }

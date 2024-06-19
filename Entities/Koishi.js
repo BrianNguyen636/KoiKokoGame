@@ -9,7 +9,7 @@ class Koishi extends Character {
     this.phase = 0;
 
 
-    this.health = 5;
+    this.health = 25;
   }
 
   loadAnimations() {
