@@ -181,9 +181,11 @@ class UIManager {
         // ctx.fillText(this.bossName, 250, 750, 80);
         ctx.fillStyle = "black";
         ctx.fillRect(238, 758, 804, 24)
-        ctx.fillStyle = "Green";
+        if (this.game.boss.phase % 2 == 0) ctx.fillStyle = "Green"; 
+        else ctx.fillStyle = "Yellow";
         ctx.fillRect(240, 760, 800, 20);
-        ctx.fillStyle = "Red";
+        if (this.game.boss.phase % 2 == 0) ctx.fillStyle = "Yellow";
+        else ctx.fillStyle = "Red";
         ctx.fillRect(1040 - 800*(1 - healthPercent), 760, 800*(1 - healthPercent), 20);
     }
 

@@ -29,15 +29,17 @@ class KoishiController {
             if (this.yVelocity >= 0 && this.boss.y == 700 - this.boss.yBoxOffset) {
                 // ASSET_MANAGER.playSound("Thud");
                 this.xVelocity = 0;
-                if (this.boss.phase < 1) {
+                if (this.boss.phase < 2) {
                     
                     switch(this.boss.phase) {
                         case(0): { 
                             this.boss.setController(new KoishiPhase1(this.boss, this.game));
-                            this.boss.phase = 1;
+                        } break;
+                        case(1): { 
+                            this.boss.setController(new KoishiPhase2(this.boss, this.game));
                         } break;
                     }
-                    this.boss.health = 25;
+                    this.boss.health = 1;
 
                 } else {
                     this.boss.state = this.loseState;

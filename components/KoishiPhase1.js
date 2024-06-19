@@ -5,6 +5,7 @@ class KoishiPhase1 extends KoishiController {
         this.attackDuration = 1.5;
         this.attackEffect;
         this.boss.state = 3;
+        this.boss.phase = 1;
         this.declared = false;
         this.attackCount = 0;
     }

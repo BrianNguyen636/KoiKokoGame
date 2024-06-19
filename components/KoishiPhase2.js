@@ -1,15 +1,17 @@
-class KoishiPhase0 extends KoishiController {
+class KoishiPhase2 extends KoishiController {
     constructor(boss, game) {
         super(boss, game);
-        this.timer = 1;
-        this.attackDuration = 0;
+        this.timer = 1.5;
+        this.attackDuration = 1.5;
+        this.boss.phase = 2;
+        this.boss.state = 3;
         this.attackEffect;
     }
     behavior() {
         if (this.timer <= 0 && this.attackDuration <= 0 && this.boss.state == 0) { //Idle timer
             this.facePlayer();
 
-            let roll = this.rollForAttack(3);
+            let roll = this.rollForAttack(4);
             // let roll = 2;
             switch(roll) {
                 case(0): {
