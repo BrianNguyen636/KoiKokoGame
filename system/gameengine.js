@@ -12,6 +12,8 @@ class GameEngine {
         this.uiManager = new UIManager(this);
         this.floor = 700;
         this.mainMenu = null;
+        this.dialog = false;
+        this.ending = false;
         // Options and the Details
         this.options = options || {
             debugging: false,
@@ -44,6 +46,8 @@ class GameEngine {
         this.ctx = ctx;
         this.defeat = false;
         this.victory = false;
+        this.dialog = false;
+        this.ending = false;
         inputManager.startInput();
         this.timer = new Timer();
         this.entities = [];
@@ -55,6 +59,7 @@ class GameEngine {
         this.boss = kosher;
         this.uiManager = new UIManager(this);
         this.menuController = new MenuController(this);
+        this.dialogManager = new DialogManager(this);
     };
 
     start() {
@@ -100,6 +105,7 @@ class GameEngine {
         }
 
         this.uiManager.draw(this.ctx);
+        this.dialogManager.draw(this.ctx);
     };
 
 
@@ -119,7 +125,7 @@ class GameEngine {
                 this.entities.splice(i, 1);
             }
         }
-
+        this.dialogManager.update();
         this.camera.update();
 
         if (inputManager.pauseButton && !inputManager.pauseButtonHold) {
@@ -144,6 +150,8 @@ class GameEngine {
             this.menuController.mainMenu();
         } else if (this.paused) {
             this.menuController.pauseMenu();
+        } else if (this.ending) {
+            this.menuController.victory();
         } else { //NORMAL GAME
             this.clockTick = this.timer.tick();
             this.update();

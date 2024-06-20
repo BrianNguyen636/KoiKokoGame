@@ -25,7 +25,7 @@ audioFiles.forEach(e => {
 })
 
 let uiFiles = ['mainmenu','paused','resume','arrow','restart','AltScreen','title',
-	'credits','gameover','options','start'
+	'credits','gameover','options','start','dialogue'
 ];
 uiFiles.forEach(e => {
 	ASSET_MANAGER.queueDownload("./assets/" + e + ".png");

@@ -1,11 +1,11 @@
 class Player extends Character {
   constructor(game) {
-    super("player", "Kokoro", game, 500, 500, 443, (2500 - 300) / 2 - 300, game.floor - 443, 5);
+    super("player", "Kokoro", game, 500, 500, 443, (2500 - 300) / 2 - 300, game.floor - 443, 8);
     this.facing = 0;
     this.setController(new PlayerController(this, game));
     this.hurtState = 6;
 
-    this.health = 2; //DEBUG
+    // this.health = 2; //DEBUG
   }
 
   loadAnimations() {

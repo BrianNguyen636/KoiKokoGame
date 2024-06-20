@@ -52,10 +52,11 @@ class MenuController {
         } else {
             this.game.uiManager.drawMainMenu(this.game.ctx);
             this.optionSelection(3);
-            if (inputManager.A && !inputManager.AHold && this.selected == 0) { //END START MENU
+            if (inputManager.A && !inputManager.AHold && this.selected == 0) { //END MENU START GAME
                 inputManager.AHold = true;
                 ASSET_MANAGER.playSound("menu_confirm");
                 this.game.mainMenu = false;
+                this.game.dialog = true;
             }
             if (inputManager.A && !inputManager.AHold && this.selected == 1) {
                 inputManager.AHold = true;
@@ -78,7 +79,7 @@ class MenuController {
             if (inputManager.pauseButton) inputManager.pauseButtonHold = true;
             if (inputManager.A) inputManager.AHold = true;
             ASSET_MANAGER.playSound("menu_confirm");
-            inputManager.paused = false;
+            this.game.paused = false;
             // ASSET_MANAGER.resumeBGM();
             this.selected = 0;
         }
@@ -245,10 +246,12 @@ class MenuController {
         this.game.uiManager.drawGameOver(this.game.ctx);
         if (inputManager.A && !inputManager.AHold && this.selected == 0) { //RESTART
             inputManager.AHold = true;
+            ASSET_MANAGER.playSound("menu_confirm");
             this.restart();
         }
         if (inputManager.A && !inputManager.AHold && this.selected == 1) { //MAIN MENU
             inputManager.AHold = true;
+            ASSET_MANAGER.playSound("menu_confirm");
             this.goToMainMenu();
         }
     }
@@ -257,10 +260,12 @@ class MenuController {
         this.game.uiManager.drawVictory(this.game.ctx);
         if (inputManager.A && !inputManager.AHold && this.selected == 0) { //RESTART
             inputManager.AHold = true;
+            ASSET_MANAGER.playSound("menu_confirm");
             this.restart();
         }
         if (inputManager.A && !inputManager.AHold && this.selected == 1) { //MAIN MENU
             inputManager.AHold = true;
+            ASSET_MANAGER.playSound("menu_confirm");
             this.goToMainMenu();
         }
     }

@@ -2,7 +2,7 @@ class KoishiPhase0 extends KoishiController {
     constructor(boss, game) {
         super(boss, game);
         this.timer = 1;
-        this.attackDuration = 0;
+        this.attackDuration = 1;
         this.attackEffect;
     }
     behavior() {

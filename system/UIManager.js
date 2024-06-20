@@ -40,13 +40,14 @@ class UIManager {
         ctx.fillStyle = 'black';
         ctx.fillRect(0,0,1280,800);
         ctx.globalAlpha = 0.3;
-        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/KoishiCutIn.png"),
-            this.cutInX, 700 - 478, 
-            514,478);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/KoishiCutIn.png"),0,0,514,478,
+            this.cutInX, 800 - 478 * 1.5, 514 * 1.5, 478 * 1.5
+            );
         ctx.globalAlpha = 1;
         ctx.fillStyle = 'white';
         ctx.font = '60px cursive'
         ctx.fillText(this.cutinName, 600, this.cutInY, 600);
+        
 
     }
 
@@ -102,48 +103,31 @@ class UIManager {
         }
     }
 
-    // drawVictory(ctx) {
-    //     let selected = this.game.menuController.selected;
-    //     ctx.fillStyle = "White"
-    //     ctx.clearRect(0,0, 1280, 800);
-    //     ctx.font = "bold 100px serif";
-    //     ctx.fillStyle = "Green"
-    //     ctx.fillText("Victory!", 450, 200);
+    drawVictory(ctx) {
+        let selected = this.game.menuController.selected;
+        ctx.fillStyle = "White"
+        ctx.clearRect(0,0, 1280, 800);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/AltScreen.png"), 0, 0)
+        ctx.font = "bold 100px Cursive";
+        ctx.fillStyle = "Green"
+        ctx.fillText("Victory!", 450, 200);
 
-    //     ctx.font = "50px serif";
-    //     ctx.fillStyle = "white"
-    //     let difficulty;
-    //     if (this.game.lunatic) difficulty = "Lunatic";
-    //     else difficulty = "Normal";
-    //     ctx.fillText("Difficulty: " + difficulty, 450, 280);
-    //     let sum = this.game.cirnoTime + this.game.meilingTime + this.game.tenshiTime + this.game.okuuTime;
+        ctx.font = "50px serif";
+        ctx.fillStyle = "white"
+        // ctx.fillText("Total: " + Math.round(sum * 100) / 100 + "s", 450, 300 + 50 * 5);
 
-    //     ctx.fillText("Cirno: " + this.game.cirnoTime + "s", 450, 300 + 50 * 1);
-
-    //     ctx.fillText("Meiling: " + this.game.meilingTime + "s", 450, 300 + 50 * 2);
-
-    //     ctx.fillText("Tenshi: " + this.game.tenshiTime + "s", 450, 300 + 50 * 3);
-
-    //     ctx.fillText("Utsuho: " + this.game.okuuTime + "s", 450, 300 + 50 * 4);
-
-    //     ctx.fillText("Total: " + Math.round(sum * 100) / 100 + "s", 450, 300 + 50 * 5);
-
-    //     ctx.font = "60px serif";
-    //     if (selected == 0) {ctx.fillStyle = "green";} else ctx.fillStyle = "white";
-    //     ctx.fillText("Restart", 470, 660);
-    //     ctx.strokeText("Restart", 470, 660);
-    //     if (selected == 1) {ctx.fillStyle = "green";} else ctx.fillStyle = "white";
-    //     ctx.fillText("Main Menu", 470, 720);
-    //     ctx.strokeText("Main Menu", 470, 720);
-
-    //     ctx.font = "30px arial";
-    //     ctx.fillStyle = "white";
-    //     ctx.fillText("v" + this.game.version, 10, 780);
-
-    //     this.drawBGM(ctx);
-
-
-    // }
+        let icons = ['restart','mainmenu'];
+        for (let i = 0; i < icons.length; i++) {
+            ctx.drawImage(ASSET_MANAGER.getAsset("./assets/"+ icons[i] + ".png"),
+                (1280 - 300) / 2, 500 + 150 * i, 
+                300, 150);
+            if (selected == i) {
+                ctx.drawImage(ASSET_MANAGER.getAsset("./assets/arrow.png"),
+                    (1280 - 300) / 2 + 300, 500 + 150 * i, 
+                    150, 150);
+            }
+        }
+    }
 
     // drawTimer(ctx) {
     //     let time = this.game.timer.gameTime - this.game.startTime;
@@ -179,13 +163,13 @@ class UIManager {
     
     drawBossHealthBar(ctx) {
         const healthPercent = this.game.boss.health / this.game.boss.maxHealth;
-        ctx.font = "30px Arial";
+        ctx.font = "30px cursive";
         // ctx.fillStyle = "Black";
         // ctx.globalAlpha = 0.6;
         // ctx.fillRect(240, 720, 100, 50);
         ctx.globalAlpha = 1;
-        // ctx.fillStyle = "White";
-        // ctx.fillText(this.bossName, 250, 750, 80);
+        ctx.fillStyle = "White";
+        ctx.fillText("Komeiji Koishi", 250, 750, 140);
         ctx.fillStyle = "black";
         ctx.fillRect(238, 758, 804, 24)
         if (this.game.boss.phase % 2 == 0) ctx.fillStyle = "Green"; 
@@ -196,17 +180,6 @@ class UIManager {
         ctx.fillRect(1040 - 800*(1 - healthPercent), 760, 800*(1 - healthPercent), 20);
     }
 
-    // drawBGM(ctx) {
-    //     ctx.fillStyle = "black";
-    //     ctx.globalAlpha =  0.5;
-    //     ctx.fillRect(780, 5, 500, 30);
-    //     ctx.globalAlpha = 1;
-    //     ctx.fillStyle = "white";
-    //     ctx.strokeStyle = "black";
-    //     ctx.font = "25px arial";
-    //     ctx.fillText("BGM: " + this.bgmTitle, 800, 30, 470);
-    //     ctx.strokeText("BGM: " + this.bgmTitle, 800, 30, 470);
-    // }
     drawCredits(ctx) {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.drawImage(ASSET_MANAGER.getAsset("./assets/AltScreen.png"),
@@ -216,11 +189,9 @@ class UIManager {
         ctx.fillStyle = "white";
         let text = [
             "All credit to Team Shanghai Alice for the Touhou Project.",
-            "Credit to Twilight Frontier for the sprites and sfx.",
-            "Credits to the various artists for the soundtrack.",
-            "Thanks to Chris Marriot for \"How To Make A Web Game\"",
-            "Programming by me.",
-            "Main menu art by me."
+            "",
+            "",
+            ""
         ];
         for (let i = 0; i < text.length; i++) {
             ctx.fillText(text[i], 100, 100 + 80 * i);
@@ -340,54 +311,7 @@ class UIManager {
         ctx.fillText("*Analog stick is always bound to movement", 650, 100 + 40 * 9);
     }
 
-    // drawDialog(ctx) {
-    //     let selected = this.game.menuController.selected;
-    //     let difficulty;
-    //     if (this.game.lunatic) difficulty = "Lunatic";
-    //     else difficulty = "Normal";
-    //     ctx.globalAlpha = this.alpha;
-    //     ctx.font = "40px serif";
-    //     let options = [
-    //         "On a journey. " + "["+ difficulty +"]",
-    //         "To Misty Lake.",
-    //         "To the Scarlet Devil Mansion.",
-    //         "To Bhava-agra.",
-    //         "To the Hell Geyser.",
-    //         "I'll stay here for now."
-    //     ];
-    //     ctx.strokeStyle = "black";
-    //     for (let i = 0; i < options.length; i++) {
-    //         if (selected == i) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-    //         ctx.fillText(options[i], 540, 300 + 50 * i);
-    //         ctx.strokeText(options[i], 540, 300 + 50 * i);
-    //     }
-
-    //     let portrait = ASSET_MANAGER.getAsset("./assets/YuyukoPortrait.png");
-    //     ctx.drawImage(portrait, 0, 800 - 512);
-        
-    //     ctx.fillStyle = "black";
-    //     ctx.globalAlpha = this.alpha * 0.75;
-    //     ctx.fillRect(140, 600, 1000, 200);
-    //     ctx.globalAlpha = this.alpha;
-
-    //     ctx.font = "bold 40px Arial";
-    //     ctx.fillStyle = "white";
-    //     ctx.strokeStyle = "black";
-    //     ctx.fillText("Yuyuko", 140 + 50, 640, 900);
-    //     ctx.strokeText("Yuyuko", 140 + 50, 640, 900);
-    //     ctx.font = "bold 80px serif";
-    //     let dialog = "Hello Youmu, where would you like to go?";
-    //     ctx.fillText(dialog, 140 + 50, 630 + 100, 900);
-    //     ctx.strokeText(dialog, 140 + 50, 630 + 100, 900);
-
-    //     ctx.globalAlpha = 1;
-    // }
-
     drawFPS(ctx) {
-        // ctx.fillStyle = "black";
-        // ctx.globalAlpha =  0.5;
-        // ctx.fillRect(1200, 0, 80, 30);
-        // ctx.globalAlpha = 1;
         if (this.frameTimer <= 0) {
             this.fps = this.frameCount;
             this.frameTimer = 1;
@@ -402,7 +326,7 @@ class UIManager {
     draw(ctx) {
         this.drawFPS(ctx);
         // if (this.game.roomManager.stage != 0) this.drawTimer(ctx);
-        this.drawBossHealthBar(ctx);
+        if (!this.game.dialog)this.drawBossHealthBar(ctx);
         this.drawPlayerHealth(ctx);
         if (this.cutInDuration > 0) this.drawCutIn(ctx);
         // this.drawBGM(ctx);

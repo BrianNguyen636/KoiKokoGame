@@ -138,7 +138,7 @@ class PlayerController {
 
   updateState() {
     
-    if (this.player.state != this.player.hurtState) { //If not control locked
+    if (this.player.state != this.player.hurtState && !this.game.dialog) { //If not control locked
       //JUMPING
       if ((inputManager.up && !inputManager.upHold)||(inputManager.A && !inputManager.AHold)) {
         //START THE JUMP
@@ -188,13 +188,15 @@ class PlayerController {
       if (this.grounded) {
         //GROUNDED STATES
         this.player.state = 0;
-        if (inputManager.right && !inputManager.left) {
-          this.player.state = 1;
-          this.player.facing = 0;
-        }
-        if (inputManager.left && !inputManager.right) {
-          this.player.state = 1;
-          this.player.facing = 1;
+        if (!this.game.dialog) {
+          if (inputManager.right && !inputManager.left) {
+            this.player.state = 1;
+            this.player.facing = 0;
+          }
+          if (inputManager.left && !inputManager.right) {
+            this.player.state = 1;
+            this.player.facing = 1;
+          }
         }
       } else {
         //AIRBORNE STATES
@@ -224,7 +226,7 @@ class PlayerController {
       } else {
         this.player.x -= this.dashSpeed * gameEngine.clockTick;
       }
-    } else if (this.player.state != this.player.hurtState){ //NORMAL MOVEMENT
+    } else if (this.player.state != this.player.hurtState && !this.game.dialog){ //NORMAL MOVEMENT
       if (inputManager.right && !inputManager.left) {
         this.player.x += this.speed * gameEngine.clockTick;
       }

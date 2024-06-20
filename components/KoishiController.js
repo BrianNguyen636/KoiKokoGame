@@ -44,9 +44,10 @@ class KoishiController {
                     }
                     this.boss.health = this.boss.maxHealth;
 
-                } else {
+                } else if (!this.game.victory) {
                     this.boss.state = this.loseState;
                     this.game.victory = true;
+                    this.game.dialog = true;
                 }
             }
         }
@@ -124,12 +125,14 @@ class KoishiController {
         this.boss.x += this.xVelocity * this.game.clockTick;
 
         this.collisions();
-        if (!this.boss.dead()) {
-            this.behavior();
-        } else {
-            this.knockback(this.knockbackState);
-        }
+        if (!this.game.dialog) {
 
+            if (!this.boss.dead()) {
+                this.behavior();
+            } else {
+                this.knockback(this.knockbackState);
+            }
+        }
     };
     
 }
