@@ -109,7 +109,7 @@ class KoishiController {
             this.boss.x = 2500 - offset - this.boss.BB.width;
             this.boss.displayX = this.boss.x - gameEngine.camera.x
         }
-        if (this.boss.BB.collide(gameEngine.player.BB) && !this.boss.dead()) {
+        if (this.boss.BB.collide(gameEngine.player.BB) && !this.boss.dead() && !this.boss.invuln) {
             gameEngine.player.controller.hurt(this.boss);
         }
     }

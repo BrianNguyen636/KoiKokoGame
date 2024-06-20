@@ -11,7 +11,6 @@ class UIManager {
         this.frameCount = 0;
         // this.tip = "error";
         this.cutInDuration = 0;
-
     }
     // update() {
     //     this.playerHealth = this.game.player.health;
@@ -73,19 +72,27 @@ class UIManager {
         }
     }
 
-    // drawGameOver(ctx) {
-    //     let selected = this.game.menuController.selected;
-    //     ctx.font = "100px serif";
-    //     ctx.fillStyle = "red"
-    //     ctx.strokeStyle = "black";
-    //     ctx.fillText("GAME OVER", 400, 300);
-    //     ctx.font = "60px serif";
-    //     if (selected == 0) {ctx.fillStyle = "green";} else ctx.fillStyle = "white";
-    //     ctx.fillText("Restart", 470, 400);
-    //     ctx.strokeText("Restart", 470, 400);
-    //     if (selected == 1) {ctx.fillStyle = "green";} else ctx.fillStyle = "white";
-    //     ctx.fillText("Main Menu", 470, 460);
-    //     ctx.strokeText("Main Menu", 470, 460);
+    drawGameOver(ctx) {
+        ctx.globalAlpha = this.alpha;
+        if (this.alpha < 1) this.alpha += this.game.clockTick * 0.5;
+        else this.alpha = 1; 
+        let selected = this.game.menuController.selected;
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/gameover.png"),
+            (1280 - 400) / 2, 50, 
+            400, 200);
+        let icons = ['restart','mainmenu'];
+        for (let i = 0; i < icons.length; i++) {
+            ctx.drawImage(ASSET_MANAGER.getAsset("./assets/"+ icons[i] + ".png"),
+                (1280 - 300) / 2, 300 + 150 * i, 
+                300, 150);
+            if (selected == i) {
+                ctx.drawImage(ASSET_MANAGER.getAsset("./assets/arrow.png"),
+                    (1280 - 300) / 2 + 300, 300 + 150 * i, 
+                    150, 150);
+            }
+        }
+        ctx.globalAlpha = 1;
+    }
         
 
 
@@ -200,139 +207,138 @@ class UIManager {
     //     ctx.fillText("BGM: " + this.bgmTitle, 800, 30, 470);
     //     ctx.strokeText("BGM: " + this.bgmTitle, 800, 30, 470);
     // }
-    // drawCredits(ctx) {
-    //     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    //     ctx.font = "40px serif";
-    //     ctx.fillStyle = "white";
-    //     let text = [
-    //         "All credit to Team Shanghai Alice for the Touhou Project.",
-    //         "Credit to Twilight Frontier for the sprites and sfx.",
-    //         "Credits to the various artists for the soundtrack.",
-    //         "Thanks to Chris Marriot for \"How To Make A Web Game\"",
-    //         "Programming by me.",
-    //         "Main menu art by me."
-    //     ];
-    //     for (let i = 0; i < text.length; i++) {
-    //         ctx.fillText(text[i], 100, 100 + 80 * i);
-    //     }
-    //     ctx.font = "100px serif";
-    //     ctx.fillStyle = "green";
-    //     ctx.fillText("Return", 540, 700);
-    // };
+    drawCredits(ctx) {
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/AltScreen.png"),
+            0,0, 
+            1280,800);
+        ctx.font = "40px serif";
+        ctx.fillStyle = "white";
+        let text = [
+            "All credit to Team Shanghai Alice for the Touhou Project.",
+            "Credit to Twilight Frontier for the sprites and sfx.",
+            "Credits to the various artists for the soundtrack.",
+            "Thanks to Chris Marriot for \"How To Make A Web Game\"",
+            "Programming by me.",
+            "Main menu art by me."
+        ];
+        for (let i = 0; i < text.length; i++) {
+            ctx.fillText(text[i], 100, 100 + 80 * i);
+        }
+        ctx.font = "100px cursive";
+        ctx.fillStyle = "green";
+        ctx.fillText("Return", 540, 700);
+    };
     
-    // drawStartMenu(ctx) {
-    //     let selected = this.game.menuController.selected;
-    //     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    //     let screen = ASSET_MANAGER.getAsset("./assets/StartMenu.png");
-    //     ctx.drawImage(screen, 0, 0);
-    //     ctx.font = "bold 100px serif";
-    //     if (selected == 0) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-    //     ctx.fillText("Start", 20, 400);
-    //     if (selected == 1) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-    //     ctx.fillText("Options", 20, 500);
-    //     if (selected == 2) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-    //     ctx.fillText("Credits", 20, 600);
+    drawMainMenu(ctx) {
+        let selected = this.game.menuController.selected;
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        let screen = ASSET_MANAGER.getAsset("./assets/title.png");
+        ctx.drawImage(screen, 0, 0);
+        let icons = ['start','options','credits'];
+        for (let i = 0; i < icons.length; i++) {
+            ctx.drawImage(ASSET_MANAGER.getAsset("./assets/"+ icons[i] + ".png"),
+                (1280 - 300) / 2, 300 + 150 * i, 
+                300, 150);
+            if (selected == i) {
+                ctx.drawImage(ASSET_MANAGER.getAsset("./assets/arrow.png"),
+                    (1280 - 300) / 2 + 300, 300 + 150 * i, 
+                    150, 150);
+            }
+        }
+    }
 
-    //     ctx.strokeStyle = "white";
-    //     ctx.strokeRect(30, 10, 400, 200);
+    drawOptions(ctx) {
+        let selected = this.game.menuController.selected;
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/AltScreen.png"),
+            0,0, 
+            1280,800);
+        ctx.font = "bold 100px cursive"
+        if (selected == 0) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
+        ctx.fillText("Set Keyboard", (1280 - 500) / 2, 400, 600);
+        if (selected == 1) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
+        ctx.fillText("Set Controller", (1280 - 500) / 2, 500, 600);
+        if (selected == 2) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
+        let volume = ASSET_MANAGER.volume;
+        volume = Math.round(ASSET_MANAGER.volume * 100);
+        ctx.fillText("Set Volume: "+ volume + "%", (1280 - 500) / 2, 600, 600);
+        if (selected == 3) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
+        ctx.fillText("Return", (1280 - 500) / 2, 700, 600);
+    }
 
-    //     ctx.font = "bold 100px serif";
-    //     ctx.fillStyle = "green";
-    //     ctx.fillText("Youmu", 50, 100, 400);
-    //     ctx.fillText("Legacy", 50, 180, 400);
-        
-    //     ctx.fillStyle = "white";
-    //     ctx.font = "25px serif";
-    //     // ctx.fillText("Press [Jump] to confirm. Default: Z or (A)", 10, 770);
-    //     ctx.fillText("BGM: Kuroneko Lounge - Ancient Temple", 900, 25, 370);
-    //     ctx.font = "30px arial";
-    //     ctx.fillStyle = "white";
-    //     ctx.fillText("v" + this.game.version, 10, 780);
-    // }
+    drawControls(ctx) {
+        let selected = this.game.menuController.selected;
+        ctx.font = "bold 100px cursive"
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/AltScreen.png"),
+        0,0, 
+        1280,800);
+        let controls = [
+            "Left",
+            "Right",
+            "Up",
+            "Down",
+            "Jump",
+            "Attack",
+            "Dash",
+            "Pause"
+        ];
+        let options = ["Bind all", "Restore Defaults", "Return"]
+        for (let i = 0; i < 3; i++) {
+            if (selected == i) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
+            ctx.fillText(options[i], 20, 500 + 100 * i);
+        }
+        ctx.fillStyle = "white"
+        ctx.font = "30px cursive"
+        let i = 0;
+        for (let i = 0; i < controls.length; i++) {
+            if (this.game.menuController.binding == i) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
+            ctx.fillText(controls[i], 800, 100 + 40 * i);
+        }
+        for (const x of inputManager.keybinds.entries()) {
+            if (this.game.menuController.binding == i) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
+            ctx.fillText("--- " + x[0], 900, 100 + 40 * i);
+            i++;
+        }
+    }
 
-    // drawOptions(ctx) {
-    //     let selected = this.game.menuController.selected;
-    //     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    //     ctx.font = "bold 100px serif"
-    //     if (selected == 0) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-    //     ctx.fillText("Set Keyboard", 20, 400);
-    //     if (selected == 1) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-    //     ctx.fillText("Set Controller", 20, 500);
-    //     if (selected == 2) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-    //     ctx.fillText("Set Volume", 20, 600);
-    //     let volume = ASSET_MANAGER.volume;
-    //     volume = Math.round(ASSET_MANAGER.volume * 100);
-    //     ctx.fillText(volume + "%", 620, 600);
-    //     if (selected == 3) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-    //     ctx.fillText("Return", 20, 700);
-    // }
-
-    // drawControls(ctx) {
-    //     let selected = this.game.menuController.selected;
-    //     ctx.font = "bold 100px serif"
-    //     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    //     let controls = [
-    //         "Left",
-    //         "Right",
-    //         "Up",
-    //         "Down",
-    //         "Jump",
-    //         "Attack",
-    //         "Dash",
-    //         "Pause"
-    //     ];
-    //     let options = ["Bind all", "Restore Defaults", "Return"]
-    //     for (let i = 0; i < 3; i++) {
-    //         if (selected == i) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-    //         ctx.fillText(options[i], 20, 500 + 100 * i);
-    //     }
-    //     ctx.fillStyle = "white"
-    //     ctx.font = "30px serif"
-    //     let i = 0;
-    //     for (let i = 0; i < controls.length; i++) {
-    //         if (this.game.menuController.binding == i) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-    //         ctx.fillText(controls[i], 800, 100 + 40 * i);
-    //     }
-    //     for (const x of this.game.keybinds.entries()) {
-    //         if (this.game.menuController.binding == i) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-    //         ctx.fillText("--- " + x[0], 900, 100 + 40 * i);
-    //         i++;
-    //     }
-    // }
-
-    // drawControllerControls(ctx) {
-    //     let selected = this.game.menuController.selected;
-    //     ctx.font = "bold 100px serif"
-    //     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    //     let controls = [
-    //         "Left",
-    //         "Right",
-    //         "Up",
-    //         "Down",
-    //         "Jump",
-    //         "Attack",
-    //         "Dash",
-    //         "Pause"
-    //     ];
-    //     let options = ["Bind all", "Restore Defaults", "Return"]
-    //     for (let i = 0; i < 3; i++) {
-    //         if (selected == i) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-    //         ctx.fillText(options[i], 20, 500 + 100 * i);
-    //     }
-    //     ctx.fillStyle = "white"
-    //     ctx.font = "30px serif"
-    //     let i = 0;
-    //     for (let i = 0; i < controls.length; i++) {
-    //         if (this.game.menuController.binding == i) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-    //         ctx.fillText(controls[i], 800, 100 + 40 * i);
-    //     }
-    //     for (const x of this.game.controllerBinds.entries()) {
-    //         if (this.game.menuController.binding == i) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-    //         ctx.fillText("--- " + x[0], 900, 100 + 40 * i);
-    //         i++;
-    //     }
-    //     ctx.fillText("*Analog stick is always bound to movement", 650, 100 + 40 * 9);
-    // }
+    drawControllerControls(ctx) {
+        let selected = this.game.menuController.selected;
+        ctx.font = "bold 100px cursive"
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/AltScreen.png"),
+        0,0, 
+        1280,800);
+        let controls = [
+            "Left",
+            "Right",
+            "Up",
+            "Down",
+            "Jump",
+            "Attack",
+            "Dash",
+            "Pause"
+        ];
+        let options = ["Bind all", "Restore Defaults", "Return"]
+        for (let i = 0; i < 3; i++) {
+            if (selected == i) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
+            ctx.fillText(options[i], 20, 500 + 100 * i);
+        }
+        ctx.fillStyle = "white"
+        ctx.font = "30px cursive"
+        let i = 0;
+        for (let i = 0; i < controls.length; i++) {
+            if (this.game.menuController.binding == i) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
+            ctx.fillText(controls[i], 800, 100 + 40 * i);
+        }
+        for (const x of inputManager.controllerBinds.entries()) {
+            if (this.game.menuController.binding == i) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
+            ctx.fillText("--- " + x[0], 900, 100 + 40 * i);
+            i++;
+        }
+        ctx.fillText("*Analog stick is always bound to movement", 650, 100 + 40 * 9);
+    }
 
     // drawDialog(ctx) {
     //     let selected = this.game.menuController.selected;

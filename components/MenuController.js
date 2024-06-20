@@ -7,7 +7,7 @@ class MenuController {
         this.binding = -1;
     }
     goToMainMenu() {
-        // this.game.startMenu = true;
+        this.game.mainMenu = true;
         this.restart();
     }
     restart() {
@@ -30,36 +30,45 @@ class MenuController {
     }
 
     creditsPage() {
-        this.credits = true;
         this.game.uiManager.drawCredits(this.game.ctx);
-        if (this.game.A && !this.game.AHold) {
-            ASSET_MANAGER.playSound("Cancel");
-            this.game.AHold = true;
+        if (inputManager.A && !inputManager.AHold) {
+            ASSET_MANAGER.playSound("menu_confirm");
+            inputManager.AHold = true;
             this.credits = false;
         }
     }
 
-    startMenu() {
-        this.game.uiManager.drawStartMenu(this.game.ctx);
-        this.optionSelection(3);
-        if (this.game.A && !this.game.AHold && this.selected == 0) { //END START MENU
-            this.game.AHold = true;
-            this.game.paused = false;
-            ASSET_MANAGER.playSound("Select");
-            this.game.roomManager.stageTransition(0);
-            this.game.startMenu = false;
-        }
-        if (this.game.A && !this.game.AHold && this.selected == 1) {
-            this.game.AHold = true;
-            ASSET_MANAGER.playSound("Select");
-            this.optionsMenu();
-            this.selected = 0;
-        }
-        if (this.game.A && !this.game.AHold && this.selected == 2) {
-            this.game.AHold = true;
-            ASSET_MANAGER.playSound("Select");
+    mainMenu() {
+        if (this.options) {
+            if (this.controls) {
+                this.controlsMenu()
+            } else if (this.controllerControls) {
+                this.controllerControlsMenu();
+            } else {
+                this.optionsMenu();
+            }
+        } else if (this.credits) {
             this.creditsPage();
-            this.selected = 0;
+        } else {
+            this.game.uiManager.drawMainMenu(this.game.ctx);
+            this.optionSelection(3);
+            if (inputManager.A && !inputManager.AHold && this.selected == 0) { //END START MENU
+                inputManager.AHold = true;
+                ASSET_MANAGER.playSound("menu_confirm");
+                this.game.mainMenu = false;
+            }
+            if (inputManager.A && !inputManager.AHold && this.selected == 1) {
+                inputManager.AHold = true;
+                ASSET_MANAGER.playSound("menu_confirm");
+                this.options = true;
+                this.selected = 0;
+            }
+            if (inputManager.A && !inputManager.AHold && this.selected == 2) {
+                inputManager.AHold = true;
+                ASSET_MANAGER.playSound("menu_confirm");
+                this.credits = true;
+                this.selected = 0;
+            }
         }
     }
     pauseMenu() {
@@ -69,7 +78,7 @@ class MenuController {
             if (inputManager.pauseButton) inputManager.pauseButtonHold = true;
             if (inputManager.A) inputManager.AHold = true;
             ASSET_MANAGER.playSound("menu_confirm");
-            this.game.paused = false;
+            inputManager.paused = false;
             // ASSET_MANAGER.resumeBGM();
             this.selected = 0;
         }
@@ -90,51 +99,51 @@ class MenuController {
             "Right",
             "Up",
             "Down",
-            "Jump",
-            "Attack",
-            "Dash",
+            "A",
+            "B",
+            "C",
             "Pause"
         ];
 
-        if (this.game.keyPress && !this.game.keyHold) {
-            this.game.keyHold = true;
-            ASSET_MANAGER.playSound("Select");
-            if (!this.game.controllerBinds.has(this.game.key)) {
-                this.game.controllerBinds.set(this.game.key, controls[this.binding]);
+        if (inputManager.keyPress && !inputManager.keyHold) {
+            inputManager.keyHold = true;
+            ASSET_MANAGER.playSound("menu_confirm");
+            if (!inputManager.controllerBinds.has(inputManager.key)) {
+                inputManager.controllerBinds.set(inputManager.key, controls[this.binding]);
                 this.binding += 1;
             } else {
 
             }
         }
         if (this.binding >= controls.length) {
-            this.game.controllerBinding = false;
-            this.game.pauseButtonHold = true;
+            inputManager.controllerBinding = false;
+            inputManager.pauseButtonHold = true;
         }
     }
     controllerControlsMenu() {
         this.optionSelection(3);
         this.game.uiManager.drawControllerControls(this.game.ctx);
-        if (this.game.controllerBinding) this.controllerBinding();
-        if (this.game.A && !this.game.AHold && this.selected == 0) { //CONTROLLER BINDS
-            this.game.AHold = true;
-            this.game.keyHold = true;
-            ASSET_MANAGER.playSound("Select");
+        if (inputManager.controllerBinding) this.controllerBinding();
+        if (inputManager.A && !inputManager.AHold && this.selected == 0) { //CONTROLLER BINDS
+            inputManager.AHold = true;
+            inputManager.keyHold = true;
+            ASSET_MANAGER.playSound("menu_confirm");
             this.binding = 0;
-            this.game.controllerBinding = true;
-            this.game.controllerBinds.clear();
+            inputManager.controllerBinding = true;
+            inputManager.controllerBinds.clear();
         }
-        if (this.game.A && !this.game.AHold && this.selected == 1) { //DEFAULT CONTROLLER
+        if (inputManager.A && !inputManager.AHold && this.selected == 1) { //DEFAULT CONTROLLER
             this.binding = 0;
-            this.game.AHold = true;
-            ASSET_MANAGER.playSound("Select");
-            this.game.controllerBinds.clear();
-            this.game.defaultController();
+            inputManager.AHold = true;
+            ASSET_MANAGER.playSound("menu_confirm");
+            inputManager.controllerBinds.clear();
+            inputManager.defaultController();
         }
-        if ((this.game.A && !this.game.AHold && this.selected == 2) || (this.game.pauseButton && !this.game.pauseButtonHold)) { //RETURN
-            if (this.game.pauseButton) this.game.pauseButtonHold = true;
-            if (this.game.A) this.game.AHold = true;
+        if ((inputManager.A && !inputManager.AHold && this.selected == 2) || (inputManager.pauseButton && !inputManager.pauseButtonHold)) { //RETURN
+            if (inputManager.pauseButton) inputManager.pauseButtonHold = true;
+            if (inputManager.A) inputManager.AHold = true;
             this.binding = 0;
-            ASSET_MANAGER.playSound("Cancel");
+            ASSET_MANAGER.playSound("menu_confirm");
             this.controllerControls = false;
             this.selected = 0;
         }
@@ -145,52 +154,50 @@ class MenuController {
             "Right",
             "Up",
             "Down",
-            "Jump",
-            "Attack",
-            "Dash",
+            "A",
+            "B",
+            "C",
             "Pause"
         ];
-        if (this.game.keyPress && !this.game.keyHold) {
-            this.game.keyHold = true;
-            ASSET_MANAGER.playSound("Select");
-            if (!this.game.keybinds.has(this.game.key)) {
-                this.game.keybinds.set(this.game.key, controls[this.binding]);
+        if (inputManager.keyPress && !inputManager.keyHold) {
+            inputManager.keyHold = true;
+            ASSET_MANAGER.playSound("menu_confirm");
+            if (!inputManager.keybinds.has(inputManager.key)) {
+                inputManager.keybinds.set(inputManager.key, controls[this.binding]);
                 this.binding += 1;
-            } else {
-
             }
         }
         if (this.binding >= controls.length) {
-            this.game.keyBinding = false;
-            this.game.pauseButtonHold = true;
-            this.game.AHold = false;
+            inputManager.keyBinding = false;
+            inputManager.pauseButtonHold = true;
+            inputManager.AHold = false;
         }
     }
     controlsMenu() {
         this.optionSelection(3);
         this.game.uiManager.drawControls(this.game.ctx);
-        if (this.game.keyBinding) this.controlBinding();
-        if (this.game.A && !this.game.AHold && this.selected == 0) { //KEYBINDING
-            this.game.A = false;
-            this.game.AHold = true;
-            this.game.keyHold = true;
-            ASSET_MANAGER.playSound("Select");
+        if (inputManager.keyBinding) this.controlBinding();
+        if (inputManager.A && !inputManager.AHold && this.selected == 0) { //KEYBINDING
+            inputManager.A = false;
+            inputManager.AHold = true;
+            inputManager.keyHold = true;
+            ASSET_MANAGER.playSound("menu_confirm");
             this.binding = 0;
-            this.game.keyBinding = true;
-            this.game.keybinds.clear();
+            inputManager.keyBinding = true;
+            inputManager.keybinds.clear();
         }
-        if (this.game.A && !this.game.AHold && this.selected == 1) { //DEFAULT
-            this.game.A = false;
-            this.game.AHold = true;
+        if (inputManager.A && !inputManager.AHold && this.selected == 1) { //DEFAULT
+            inputManager.A = false;
+            inputManager.AHold = true;
             this.binding = 0;
-            ASSET_MANAGER.playSound("Select");
-            this.game.keybinds.clear();
-            this.game.defaultKeybinds();
+            ASSET_MANAGER.playSound("menu_confirm");
+            inputManager.keybinds.clear();
+            inputManager.defaultKeybinds();
         }
-        if ((this.game.A && !this.game.AHold && this.selected == 2) || (this.game.pauseButton && !this.game.pauseButtonHold)) { //RETURN
-            if (this.game.pauseButton) this.game.pauseButtonHold = true;
-            if (this.game.A) this.game.AHold = true;
-            ASSET_MANAGER.playSound("Cancel");
+        if ((inputManager.A && !inputManager.AHold && this.selected == 2) || (inputManager.pauseButton && !inputManager.pauseButtonHold)) { //RETURN
+            if (inputManager.pauseButton) inputManager.pauseButtonHold = true;
+            if (inputManager.A) inputManager.AHold = true;
+            ASSET_MANAGER.playSound("menu_confirm");
             this.controls = false;
             this.selected = 0;
             this.binding = 0;
@@ -199,37 +206,36 @@ class MenuController {
     optionsMenu() {
         this.optionSelection(4);
         this.game.uiManager.drawOptions(this.game.ctx);
-        this.options = true;
-        if (this.selected == 0 && this.game.A && !this.game.AHold) { //KEYBIND MENU
-            this.game.AHold = true;
+        if (this.selected == 0 && inputManager.A && !inputManager.AHold) { //KEYBIND MENU
+            inputManager.AHold = true;
             this.controls = true;
             this.selected = 0;
-            ASSET_MANAGER.playSound("Select");
+            ASSET_MANAGER.playSound("menu_confirm");
         }
-        if (this.selected == 1 && this.game.A && !this.game.AHold) { //KEYBIND MENU
-            this.game.AHold = true;
+        if (this.selected == 1 && inputManager.A && !inputManager.AHold) { //KEYBIND MENU
+            inputManager.AHold = true;
             this.controllerControls = true;
             this.selected = 0;
-            ASSET_MANAGER.playSound("Select");
+            ASSET_MANAGER.playSound("menu_confirm");
         }
         if (this.selected == 2) { //VOLUME
-            if(this.game.left && !this.game.leftHold) {
+            if(inputManager.left && !inputManager.leftHold) {
                 // console.log(ASSET_MANAGER.volume);
-                this.game.leftHold = true;
+                inputManager.leftHold = true;
                 if (ASSET_MANAGER.volume >= 0.1) ASSET_MANAGER.adjustVolume(ASSET_MANAGER.volume - 0.1);
-                ASSET_MANAGER.playSound("Select");
+                ASSET_MANAGER.playSound("menu_change_option");
             }
-            if (this.game.right && !this.game.rightHold) {
+            if (inputManager.right && !inputManager.rightHold) {
                 // console.log(ASSET_MANAGER.volume);
-                this.game.rightHold = true;
+                inputManager.rightHold = true;
                 if (ASSET_MANAGER.volume <= 0.9) ASSET_MANAGER.adjustVolume(ASSET_MANAGER.volume + 0.1);
-                ASSET_MANAGER.playSound("Select");
+                ASSET_MANAGER.playSound("menu_change_option");
             }
         }
-        if ((this.game.A && !this.game.AHold && this.selected == 3) || (this.game.pauseButton && !this.game.pauseButtonHold)) { //RETURN
-            if (this.game.A) this.game.AHold = true;
-            if (this.game.pauseButton) this.game.pauseButtonHold = true;
-            ASSET_MANAGER.playSound("Cancel");
+        if ((inputManager.A && !inputManager.AHold && this.selected == 3) || (inputManager.pauseButton && !inputManager.pauseButtonHold)) { //RETURN
+            if (inputManager.A) inputManager.AHold = true;
+            if (inputManager.pauseButton) inputManager.pauseButtonHold = true;
+            ASSET_MANAGER.playSound("menu_confirm");
             this.options = false;
             this.selected = 1;
         }
@@ -237,24 +243,24 @@ class MenuController {
     gameOver() {
         this.optionSelection(2);
         this.game.uiManager.drawGameOver(this.game.ctx);
-        if (this.game.A && !this.game.AHold && this.selected == 0) { //RESTART
-            this.game.AHold = true;
+        if (inputManager.A && !inputManager.AHold && this.selected == 0) { //RESTART
+            inputManager.AHold = true;
             this.restart();
         }
-        if (this.game.A && !this.game.AHold && this.selected == 1) { //MAIN MENU
-            this.game.AHold = true;
+        if (inputManager.A && !inputManager.AHold && this.selected == 1) { //MAIN MENU
+            inputManager.AHold = true;
             this.goToMainMenu();
         }
     }
     victory() {
         this.optionSelection(2);
         this.game.uiManager.drawVictory(this.game.ctx);
-        if (this.game.A && !this.game.AHold && this.selected == 0) { //RESTART
-            this.game.AHold = true;
+        if (inputManager.A && !inputManager.AHold && this.selected == 0) { //RESTART
+            inputManager.AHold = true;
             this.restart();
         }
-        if (this.game.A && !this.game.AHold && this.selected == 1) { //MAIN MENU
-            this.game.AHold = true;
+        if (inputManager.A && !inputManager.AHold && this.selected == 1) { //MAIN MENU
+            inputManager.AHold = true;
             this.goToMainMenu();
         }
     }

@@ -174,6 +174,7 @@ class PlayerController {
         this.player.state = 0;
         if (this.player.dead()) {
           this.player.state = this.player.hurtState + 1;
+          this.game.defeat = true;
         }
       } 
     } else if (this.player.state == 4 && this.animationLock > 0) {//ATTACKING

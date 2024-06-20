@@ -11,7 +11,7 @@ class GameEngine {
 
         this.uiManager = new UIManager(this);
         this.floor = 700;
-
+        this.mainMenu = null;
         // Options and the Details
         this.options = options || {
             debugging: false,
@@ -21,18 +21,18 @@ class GameEngine {
 
     startScreen(ctx, player) {
         ctx.canvas.addEventListener("click", e => {
-            if (this.startMenu == null) {
+            if (this.mainMenu == null) {
                 // ASSET_MANAGER.playSound("Pause");
-                this.startMenu = true;
+                this.mainMenu = true;
                 this.init(ctx, player);
                 this.start();
                 ASSET_MANAGER.playSound("menu_confirm");
             }
         });
         ctx.canvas.addEventListener("keydown", e => {
-            if (this.startMenu == null) {
+            if (this.mainMenu == null) {
                 // ASSET_MANAGER.playSound("Pause");
-                this.startMenu = true;
+                this.mainMenu = true;
                 this.init(ctx, player);
                 this.start();
                 ASSET_MANAGER.playSound("menu_confirm");
@@ -42,6 +42,8 @@ class GameEngine {
 
     init(ctx, player) {
         this.ctx = ctx;
+        this.defeat = false;
+        this.victory = false;
         inputManager.startInput();
         this.timer = new Timer();
         this.entities = [];
@@ -139,13 +141,16 @@ class GameEngine {
     loop() {
         inputManager.update();
         if (this.mainMenu) {
-
-        } if (this.paused) {
+            this.menuController.mainMenu();
+        } else if (this.paused) {
             this.menuController.pauseMenu();
         } else { //NORMAL GAME
             this.clockTick = this.timer.tick();
             this.update();
             this.draw();
+            if (this.defeat) {
+                this.menuController.gameOver();
+            }
         }
     };
 
