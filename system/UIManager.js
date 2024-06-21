@@ -39,7 +39,7 @@ class UIManager {
         ctx.globalAlpha = 0.2;
         ctx.fillStyle = 'black';
         ctx.fillRect(0,0,1280,800);
-        ctx.globalAlpha = 0.3;
+        ctx.globalAlpha = 0.5;
         ctx.drawImage(ASSET_MANAGER.getAsset("./assets/KoishiCutIn.png"),0,0,514,478,
             this.cutInX, 800 - 478 * 1.5, 514 * 1.5, 478 * 1.5
             );
@@ -104,9 +104,15 @@ class UIManager {
     }
 
     drawVictory(ctx) {
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0,0, 1280, 800);
+        ctx.globalAlpha = this.alpha;
+        if (this.alpha < 1) this.alpha += this.game.clockTick * 1;
+        else this.alpha = 1; 
+
         let selected = this.game.menuController.selected;
+
         ctx.fillStyle = "White"
-        ctx.clearRect(0,0, 1280, 800);
         ctx.drawImage(ASSET_MANAGER.getAsset("./assets/AltScreen.png"), 0, 0)
         ctx.font = "bold 100px Cursive";
         ctx.fillStyle = "Green"
@@ -127,6 +133,7 @@ class UIManager {
                     150, 150);
             }
         }
+        ctx.globalAlpha = 1;
     }
 
     // drawTimer(ctx) {
