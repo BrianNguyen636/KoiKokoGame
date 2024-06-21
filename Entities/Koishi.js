@@ -3,11 +3,13 @@ class Koishi extends Character {
     super("enemy", "Koishi", game, 300, 300, 280, game.player.x + 500, game.floor - 280, 25);
     this.facing = 1;
     this.phase = 0;
-    this.setController(new KoishiPhase3(this, game));
+    this.setController(new KoishiPhase4(this, game));
     this.state = 0;
     this.displayX -= game.camera.x;
     this.invuln = false;
-    this.health = 2;
+
+    this.alpha = 1;
+    // this.health = 2;
   }
 
   loadAnimations() {
@@ -62,14 +64,17 @@ class Koishi extends Character {
   update(){
     // console.log(this.x + "," + this.y);
     // console.log(this.state);
+    console.log(this.alpha)
     this.controller.update();
     this.updateBB();
     this.displayX = this.x - this.game.camera.x;
     this.displayY = this.y;
   }
   draw(ctx) {
+    ctx.globalAlpha = this.alpha;
+    if (this.alpha < 0) ctx.globalAlpha = 0;
     this.animations[this.facing][this.state].drawFrame(this.game.clockTick, ctx, this.displayX, this.displayY);
-    
+    ctx.globalAlpha = 1;
     if (this.game.boxView) {
       ctx.fillStyle = 'green';
       ctx.fillText(this.x + ", " + this.y, this.displayX, this.displayY + 300, 100);

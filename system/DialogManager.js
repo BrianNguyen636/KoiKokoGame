@@ -15,32 +15,39 @@ class DialogManager {
 
         this.intro = [
             {speaker: 'H', text:"Koishi! There you are.", emote: 1},
-            {speaker: 'H', text:"I won't lose this time. Now with what's at stake here.", emote: 1},
+            {speaker: 'H', text:"I won't lose this time.", emote: 1},
+            {speaker: 'H', text:"Now with what's at stake here.", emote: 1},
             {speaker: 'K', text:"Is that so? I don't feel like losing either.", emote:1},
             {speaker: 'K', text:"Do you really want it that bad?", emote:0},
-            {speaker: 'H', text:"You already know the answer. Now prepare yourself!", emote:0},
+            {speaker: 'H', text:"You already know the answer.", emote:1},
+            {speaker: 'H', text:"Now prepare yourself!", emote:0},
             {speaker: 'H', text:"I will be taking what's mine.", emote: 1},
             {speaker: 'K', text:"How scary~", emote:1},
-            {speaker: 'K', text:"Alright, you can have it. If you beat me, that is!", emote:1}
+            {speaker: 'K', text:"Alright, you can have it...", emote:0},
+            {speaker: 'K', text:"If you beat me, that is!", emote:1}
+
         ];
         this.outro = [
             {speaker: 'K', text:"Ow ow ow...", emote:2},
             {speaker: 'H', text:"Looks like it's my victory this time.", emote:0},
             {speaker: 'K', text:"Oh couldn't you have held back a little more?", emote:2},
             {speaker: 'H', text:"No can do. After all...", emote:0},
-            {speaker: 'H', text:"I really wanted that last cake slice!", emote:0},
+            {speaker: 'H', text:"I really wanted that last cake slice!", emote:3},
             {speaker: 'H', text:"It's my favorite from the store.", emote:3},
             {speaker: 'K', text:"Aww, and I really wanted it too...", emote:3},
             {speaker: 'K', text:"Now I'm all beat up and I have no cake.", emote:3},
             {speaker: 'H', text:"...", emote: 0},
-            {speaker: 'K', text:"Boohoo.", emote:3},
+            {speaker: 'K', text:"Boohoo...", emote:3},
+            {speaker: 'K', text:"I was looking forward to it too...", emote:3},
             {speaker: 'H', text:"...", emote: 0},
             {speaker: 'H', text:"Hey Koishi, why don't we split it after all.",emote: 0},
             {speaker: 'K', text:"Huh? You mean it?", emote:0},
             {speaker: 'H', text:"I just feel like it, okay?", emote:0},
             {speaker: 'K', text:"Ohhh Kokoro-chan!!! *hugs", emote:1},
             {speaker: 'H', text:"Woah!", emote:2},
-            {speaker: 'K', text:"Kokoro-chan I love youuuu chuchuchu", emote:1},
+            {speaker: 'K', text:"Kokoro-chan I love youuuu~", emote:1},
+            {speaker: 'K', text:"Chu chu chu chu", emote:1},
+            {speaker: 'H', text:"!!!", emote:2},
             {speaker: 'H', text:"(This is sweeter than any slice of cake...)", emote:2}
         ];
     }
@@ -134,7 +141,7 @@ class DialogManager {
         ctx.font = "30px cursive";
         ctx.fillStyle = 'white';       
         ctx.fillText(speaker, 175, 800 - 285 + 45, 180);
-        ctx.font = "60px cursive";
+        ctx.font = "50px cursive";
         ctx.fillText(text, 205, 800 - 285 + 190, 860);
 
 

@@ -11,7 +11,7 @@ class PlayerController {
     this.airdash = false;
     this.doubleJumped = false;
 
-    this.speed = 500;
+    this.speed = 550;
     this.dashSpeed = 900;
     this.dashDuration = 0;
 
