@@ -10,6 +10,8 @@ class KoishiPhase4 extends KoishiController {
         this.shotCount = 0;
         this.shotTimer = 0;
         this.angle;
+
+        this.boss.health = 1 //DEBUG
     }
     behavior() {
         if (this.timer <= 0 && this.attackDuration <= 0 && this.boss.state == 0) { //Idle timer
@@ -242,7 +244,7 @@ class KoishiPhase4 extends KoishiController {
                     this.boss.invuln = false;
                     this.shotTimer = 0;
                     this.shotCount = 0;
-                    this.timer = 1;
+                    this.timer = 1.2;
                     this.boss.state = 0;
                     this.xVelocity = 0;
                     break;

@@ -13,6 +13,7 @@ class KoishiController {
     knockback(knockbackState) {
         if (this.boss.state != knockbackState && this.boss.state != this.loseState) { //initial knockback
             this.boss.invuln = true;
+            this.boss.alpha = 1;
             this.game.clearProjectiles();
             this.attackDuration = 4;
             this.timer = 4;
@@ -29,7 +30,7 @@ class KoishiController {
             if (this.yVelocity >= 0 && this.boss.y == 700 - this.boss.yBoxOffset) {
                 // ASSET_MANAGER.playSound("Thud");
                 this.xVelocity = 0;
-                if (this.boss.phase < 3) {
+                if (this.boss.phase < 5) {
                     
                     switch(this.boss.phase) {
                         case(0): { 
@@ -40,6 +41,12 @@ class KoishiController {
                         } break;
                         case(2): { 
                             this.boss.setController(new KoishiPhase3(this.boss, this.game));
+                        } break;
+                        case(3): { 
+                            this.boss.setController(new KoishiPhase4(this.boss, this.game));
+                        } break;
+                        case(4): { 
+                            this.boss.setController(new KoishiPhase5(this.boss, this.game));
                         } break;
                     }
                     this.boss.health = this.boss.maxHealth;
@@ -116,8 +123,7 @@ class KoishiController {
     }
 
     update() {
-        if (this.timer > 0) this.timer -= this.game.clockTick;
-        if (this.attackDuration > 0) this.attackDuration -= this.game.clockTick;
+
 
         if (!this.antiGrav) this.yVelocity += this.gravity * this.game.clockTick; //Gravity
 
@@ -126,7 +132,8 @@ class KoishiController {
 
         this.collisions();
         if (!this.game.dialog) {
-
+            if (this.timer > 0) this.timer -= this.game.clockTick;
+            if (this.attackDuration > 0) this.attackDuration -= this.game.clockTick;
             if (!this.boss.dead()) {
                 this.behavior();
             } else {

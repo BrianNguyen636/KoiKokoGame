@@ -20,6 +20,8 @@ ASSET_MANAGER.queueDownload("./assets/HitEffects.png")
 
 
 ASSET_MANAGER.queueDownload("./assets/Stage.png")
+ASSET_MANAGER.queueDownload("./assets/crowd.png")
+
 
 let audioFiles = ['attack1', 'enemy_damaged', 'player_damaged','menu_confirm','menu_change_option','pause']
 audioFiles.forEach(e => {

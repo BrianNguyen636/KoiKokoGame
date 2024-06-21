@@ -98,9 +98,26 @@ class UIManager {
 
 
     drawPlayerHealth(ctx) {
-        for (let i = 0; i < this.game.player.health; i++) {
-            ctx.drawImage(this.healthIcon,0,0,500,500,50 + i * 50, 20, 100,100);
+        // for (let i = 0; i < Math.floor(this.game.player.health / 2); i++) {
+        //     ctx.drawImage(this.healthIcon,0,0,500,500,20 + i * 50, 20, 100,100);
+        // }
+        // if (this.game.player.health % 2 == 1) {
+        //     ctx.drawImage(this.healthIcon,0,0,300,500,20 + 50 * (Math.floor(this.game.player.health / 2)), 20, 60,100);
+        // }
+        if (this.game.player.health > 5) {
+            let surplus = this.game.player.health - 5;
+            for (let i = 0; i < 5; i++) {
+                ctx.drawImage(this.healthIcon,0,0,500,500, 20 + i * 50, 20, 100,100);
+            }
+            for (let i = 0; i < surplus; i++) {
+                ctx.drawImage(this.healthIcon,0,0,500,500, 50 + i * 50, 50, 100,100);
+            }
+        } else {
+            for (let i = 0; i < this.game.player.health; i++) {
+                ctx.drawImage(this.healthIcon,0,0,500,500, 20 + i * 50, 20, 100,100);
+            }
         }
+
     }
 
     drawVictory(ctx) {

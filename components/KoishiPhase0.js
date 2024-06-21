@@ -6,6 +6,7 @@ class KoishiPhase0 extends KoishiController {
         this.attackEffect;
     }
     behavior() {
+        console.log(this.timer);
         if (this.timer <= 0 && this.attackDuration <= 0 && this.boss.state == 0) { //Idle timer
             this.facePlayer();
 
@@ -103,7 +104,7 @@ class KoishiPhase0 extends KoishiController {
                     this.boss.invuln = false;
                     this.shotTimer = 0;
                     this.shotCount = 0;
-                    this.timer = 1;
+                    this.timer = 1.2;
                     this.boss.state = 0;
                     this.xVelocity = 0;
                     break;

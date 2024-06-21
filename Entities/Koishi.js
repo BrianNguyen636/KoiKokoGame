@@ -3,7 +3,7 @@ class Koishi extends Character {
     super("enemy", "Koishi", game, 300, 300, 280, game.player.x + 500, game.floor - 280, 25);
     this.facing = 1;
     this.phase = 0;
-    this.setController(new KoishiPhase4(this, game));
+    this.setController(new KoishiPhase0(this, game));
     this.state = 0;
     this.displayX -= game.camera.x;
     this.invuln = false;
@@ -64,7 +64,6 @@ class Koishi extends Character {
   update(){
     // console.log(this.x + "," + this.y);
     // console.log(this.state);
-    console.log(this.alpha)
     this.controller.update();
     this.updateBB();
     this.displayX = this.x - this.game.camera.x;

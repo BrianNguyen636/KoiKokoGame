@@ -103,7 +103,9 @@ class GameEngine {
             let entity = this.entities[i];
             entity.draw(this.ctx, this);
         }
-
+        this.ctx.drawImage(ASSET_MANAGER.getAsset("./assets/crowd.png"),
+            -this.camera.x, -100, 
+            2500, 1000);
         this.uiManager.draw(this.ctx);
         this.dialogManager.draw(this.ctx);
     };
