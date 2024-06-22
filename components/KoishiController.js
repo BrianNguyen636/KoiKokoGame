@@ -19,7 +19,7 @@ class KoishiController {
             this.timer = 4;
             // this.setBossTime();
             this.antiGrav = false;
-            // this.game.timer.timerRun = false;
+            this.game.timer.track = false;
             // this.game.combat = false
             // ASSET_MANAGER.playSound("KO");
             this.facePlayer();
@@ -50,7 +50,6 @@ class KoishiController {
                         } break;
                     }
                     this.boss.health = this.boss.maxHealth;
-
                 } else if (!this.game.victory) {
                     this.boss.state = this.loseState;
                     this.game.victory = true;

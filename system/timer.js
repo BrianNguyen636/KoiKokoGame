@@ -5,7 +5,7 @@ class Timer {
         this.gameTime = 0;
         this.maxStep = 0.05;
         this.lastTimestamp = 0;
-        this.timerRun = false;
+        this.track = false;
     };
 
     tick() {
@@ -13,7 +13,7 @@ class Timer {
         const delta = (current - this.lastTimestamp) / 1000;
         this.lastTimestamp = current;
         const gameDelta = Math.min(delta, this.maxStep);
-        if (this.timerRun) this.gameTime += gameDelta;
+        if (this.track) this.gameTime += gameDelta;
         return gameDelta;
     };
 };

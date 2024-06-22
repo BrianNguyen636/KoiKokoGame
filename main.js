@@ -23,13 +23,13 @@ ASSET_MANAGER.queueDownload("./assets/Stage.png")
 ASSET_MANAGER.queueDownload("./assets/crowd.png")
 
 
-let audioFiles = ['attack1', 'enemy_damaged', 'player_damaged','menu_confirm','menu_change_option','pause']
+let audioFiles = ['attack1', 'enemy_damaged', 'player_damaged','menu_confirm','menu_change_option','pause', 'thelostemotion']
 audioFiles.forEach(e => {
 	ASSET_MANAGER.queueDownload("./assets/audio/" + e + ".wav");
 })
 
 let uiFiles = ['mainmenu','paused','resume','arrow','restart','AltScreen','title',
-	'credits','gameover','options','start','dialogue'
+	'credits','gameover','options','start','dialogue', 'star'
 ];
 uiFiles.forEach(e => {
 	ASSET_MANAGER.queueDownload("./assets/" + e + ".png");

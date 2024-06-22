@@ -85,9 +85,12 @@ class AssetManager {
     };
     playBGM(name) {
         if (this.currentSong != null) this.pauseBGM();
-        let path = "./assets/audio/" + name + ".mp3";
+        let path = "./assets/audio/" + name;
         this.currentSong = path;
-        this.playAudio(path);
+        let audio = this.cache[path];
+        audio.currentTime = 0;
+        audio.volume = this.volume / 2;
+        audio.play();
         this.autoRepeat(path);
     };
     pauseBGM() {

@@ -137,7 +137,7 @@ class UIManager {
 
         ctx.font = "50px serif";
         ctx.fillStyle = "white"
-        // ctx.fillText("Total: " + Math.round(sum * 100) / 100 + "s", 450, 300 + 50 * 5);
+        ctx.fillText("Time: " + Math.round(this.game.timer.gameTime * 100) / 100 + "s", 450, 400);
 
         let icons = ['restart','mainmenu'];
         for (let i = 0; i < icons.length; i++) {
@@ -153,37 +153,21 @@ class UIManager {
         ctx.globalAlpha = 1;
     }
 
-    // drawTimer(ctx) {
-    //     let time = this.game.timer.gameTime - this.game.startTime;
-    //     if (this.game.roomManager.stage == 2 && this.game.bossRush) {
-    //         time = time - this.game.cirnoTime;
-    //     }
-    //     if (this.game.roomManager.stage == 3 && this.game.bossRush) {
-    //         time = time - this.game.meilingTime - this.game.cirnoTime;
-    //     }
-    //     if (this.game.roomManager.stage == 4 && this.game.bossRush) {
-    //         time = time - this.game.tenshiTime - this.game.meilingTime - this.game.cirnoTime;
-    //     }
-
-    //     // ctx.fillStyle = "black";
-    //     // ctx.globalAlpha = 0.6;
-    //     // ctx.fillRect(580, 65, 140, 40);
-    //     // ctx.globalAlpha = 1;
-    //     time = Math.round((time) * 100) / 100;
-    //     ctx.font = "40px arial";
-    //     ctx.fillStyle = "white";
-    //     ctx.strokeStyle = "black";
-    //     if ((time * 100) % 100 == 0) {
-    //         ctx.fillText(time + ".00s", 600, 100);
-    //         ctx.strokeText(time + ".00s", 600, 100);
-    //     } else if ((time * 100) % 10 == 0) {
-    //         ctx.fillText(time + "0s", 600, 100);
-    //         ctx.strokeText(time + "0s", 600, 100);
-    //     } else {
-    //         ctx.fillText(time + "s", 600, 100);
-    //         ctx.strokeText(time + "s", 600, 100);
-    //     }
-    // }
+    drawTimer(ctx) {
+        let time = this.game.timer.gameTime;
+        time = Math.round((time) * 100) / 100;
+        ctx.font = "20px cursive";
+        ctx.fillStyle = "white";
+        let x = 0+20;
+        let y = 800 - 20;
+        if ((time * 100) % 100 == 0) {
+            ctx.fillText(time + ".00s", x, y);
+        } else if ((time * 100) % 10 == 0) {
+            ctx.fillText(time + "0s", x, y);
+        } else {
+            ctx.fillText(time + "s", x, y);
+        }
+    }
     
     drawBossHealthBar(ctx) {
         const healthPercent = this.game.boss.health / this.game.boss.maxHealth;
@@ -202,27 +186,50 @@ class UIManager {
         if (this.game.boss.phase % 2 == 0) ctx.fillStyle = "Yellow";
         else ctx.fillStyle = "Red";
         ctx.fillRect(1040 - 800*(1 - healthPercent), 760, 800*(1 - healthPercent), 20);
+
+        let stars = 2;
+        if (this.game.boss.phase > 1) {
+            stars--;
+            if (this.game.boss.phase > 3) {
+                stars--;
+            }
+        }
+        for (let i = 0; i < stars; i++) {
+            ctx.drawImage(ASSET_MANAGER.getAsset("./assets/star.png"), 0,0,50,50,1040 - 25*(i+1) , 760-25, 25,25);
+        }
     }
 
     drawCredits(ctx) {
+        ctx.save();
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.drawImage(ASSET_MANAGER.getAsset("./assets/AltScreen.png"),
             0,0, 
             1280,800);
-        ctx.font = "40px serif";
+        ctx.font = "30px cursive";
         ctx.fillStyle = "white";
+        ctx.textBaseline = 'middle'
+        ctx.textAlign ='center'
+
         let text = [
             "All credit to Team Shanghai Alice for the Touhou Project.",
+            "Created for Touhou Pride Jam 6",
             "",
+            "AvianZebra: Programming, Menu art, Effects, UI, Writing",
+            "Marrddaa: Sprite art, Background art, Portrait art",
+            "Kasha: Music, Sound Effects",
             "",
-            ""
+            "Socials:",
+            "@Avian_Zebra (Twitter)",
+            "@marrddaa (Insta)",
+            "kasha.dev"
         ];
         for (let i = 0; i < text.length; i++) {
-            ctx.fillText(text[i], 100, 100 + 80 * i);
+            ctx.fillText(text[i], 1280/2, 100 + 40 * i);
         }
-        ctx.font = "100px cursive";
+        ctx.font = "bold 60px cursive";
         ctx.fillStyle = "green";
-        ctx.fillText("Return", 540, 700);
+        ctx.fillText("Return", (1280) / 2, 750, 400);
+        ctx.restore();
     };
     
     drawMainMenu(ctx) {
@@ -244,22 +251,26 @@ class UIManager {
     }
 
     drawOptions(ctx) {
+        ctx.save();
         let selected = this.game.menuController.selected;
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.drawImage(ASSET_MANAGER.getAsset("./assets/AltScreen.png"),
             0,0, 
             1280,800);
         ctx.font = "bold 100px cursive"
+        ctx.textBaseline = 'middle'
+        ctx.textAlign ='center'
         if (selected == 0) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-        ctx.fillText("Set Keyboard", (1280 - 500) / 2, 400, 600);
+        ctx.fillText("Set Keyboard", (1280) / 2, 300, 600);
         if (selected == 1) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-        ctx.fillText("Set Controller", (1280 - 500) / 2, 500, 600);
+        ctx.fillText("Set Controller", (1280) / 2, 400, 600);
         if (selected == 2) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
         let volume = ASSET_MANAGER.volume;
         volume = Math.round(ASSET_MANAGER.volume * 100);
-        ctx.fillText("Set Volume: "+ volume + "%", (1280 - 500) / 2, 600, 600);
+        ctx.fillText("Set Volume: "+ volume + "%", (1280) / 2, 500, 600);
         if (selected == 3) {ctx.fillStyle = "green";} else ctx.fillStyle = "white"
-        ctx.fillText("Return", (1280 - 500) / 2, 700, 600);
+        ctx.fillText("Return", (1280) / 2, 700, 600);
+        ctx.restore();
     }
 
     drawControls(ctx) {
@@ -343,14 +354,16 @@ class UIManager {
         }
         this.frameTimer -= this.game.clockTick;
         this.frameCount++;
-        ctx.font = "20px Arial";
-        ctx.fillStyle = "green";
-        ctx.fillText(this.fps + "fps", 1220, 20, 100);
+        ctx.font = "15px cursive";
+        ctx.fillStyle = "white";
+        ctx.fillText(this.fps + "fps", 1220, 20, 60);
     }
     draw(ctx) {
         this.drawFPS(ctx);
-        // if (this.game.roomManager.stage != 0) this.drawTimer(ctx);
-        if (!this.game.dialog)this.drawBossHealthBar(ctx);
+        if (!this.game.dialog) {
+            this.drawBossHealthBar(ctx);
+            this.drawTimer(ctx);
+        }
         this.drawPlayerHealth(ctx);
         if (this.cutInDuration > 0) this.drawCutIn(ctx);
         // this.drawBGM(ctx);

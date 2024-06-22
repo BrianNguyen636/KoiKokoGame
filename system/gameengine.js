@@ -57,6 +57,7 @@ class GameEngine {
         let kosher = new Koishi(this)
         this.addEntity(kosher);
         this.boss = kosher;
+
         this.uiManager = new UIManager(this);
         this.menuController = new MenuController(this);
         this.dialogManager = new DialogManager(this);
@@ -74,6 +75,10 @@ class GameEngine {
         this.init(this.ctx, new Player(this));
         this.paused = false;
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+        if (!this.mainMenu) {
+            ASSET_MANAGER.playBGM("thelostemotion.wav");
+            this.timer.track = true;
+        }
     }
 
     addEntity(entity) {
@@ -142,7 +147,7 @@ class GameEngine {
             this.paused = true;
             this.menuController.selected = 0;
             ASSET_MANAGER.playSound("pause");
-            // ASSET_MANAGER.pauseBGM();
+            if (ASSET_MANAGER.currentSong)ASSET_MANAGER.pauseBGM();
         }
     };
 

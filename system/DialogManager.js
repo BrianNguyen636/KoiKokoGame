@@ -56,16 +56,21 @@ class DialogManager {
         if (!this.game.victory) {
             if (this.index < this.intro.length - 1) {
                 this.index++;
+                if (this.index == 6) {
+                }
             } else {
+                ASSET_MANAGER.playBGM("thelostemotion.wav");
                 this.game.dialog = false;
+                this.game.timer.track = true;
             }
         } else {
             if (this.index < this.outro.length - 1) {
                 this.index++;
+                if (this.index == 4) {
+                    ASSET_MANAGER.pauseBGM();
+                }
             } else {
                 this.endTransition = true;
-                // this.game.ending = true;
-                // this.game.dialog = false;
             }
         }
     }
@@ -86,7 +91,13 @@ class DialogManager {
 
                 if (this.holdTime > 1) {
                     this.game.dialog = false;
-                    if (this.game.victory) this.endTransition= true;
+                    if (this.game.victory)  {
+                        this.endTransition= true;
+                        ASSET_MANAGER.pauseBGM();
+                    } else {
+                        this.game.timer.track = true;
+                        ASSET_MANAGER.playBGM("thelostemotion.wav");
+                    }
                 }
             }
         } else {

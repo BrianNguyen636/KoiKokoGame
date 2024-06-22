@@ -11,7 +11,7 @@ class MenuController {
         this.restart();
     }
     restart() {
-        // ASSET_MANAGER.pauseBGM();
+        if (ASSET_MANAGER.currentSong) ASSET_MANAGER.pauseBGM();
         this.game.reset();
     }
     optionSelection(optionCount) {
@@ -80,7 +80,7 @@ class MenuController {
             if (inputManager.A) inputManager.AHold = true;
             ASSET_MANAGER.playSound("menu_confirm");
             this.game.paused = false;
-            // ASSET_MANAGER.resumeBGM();
+            ASSET_MANAGER.resumeBGM();
             this.selected = 0;
         }
         if (inputManager.A && !inputManager.AHold && this.selected == 1) { //RESTART
