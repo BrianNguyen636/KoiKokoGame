@@ -28,7 +28,7 @@ audioFiles.forEach(e => {
 	ASSET_MANAGER.queueDownload("./assets/audio/" + e + ".wav");
 })
 
-let uiFiles = ['mainmenu','paused','resume','arrow','restart','AltScreen','title',
+let uiFiles = ['mainmenu','paused','resume','arrow','restart','AltScreen','Title', 'TitleScreen', 'EndScreen',
 	'credits','gameover','options','start','dialogue', 'star'
 ];
 uiFiles.forEach(e => {

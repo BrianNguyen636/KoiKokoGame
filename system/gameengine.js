@@ -86,7 +86,7 @@ class GameEngine {
     };
     clearProjectiles(){
         this.entities.forEach(e => {
-            if (e.id == 'projectile') {
+            if (e instanceof Projectile) {
                 e.removeFromWorld = true;
             }
         })

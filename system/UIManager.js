@@ -121,6 +121,7 @@ class UIManager {
     }
 
     drawVictory(ctx) {
+        ctx.save();
         ctx.fillStyle = 'black';
         ctx.fillRect(0,0, 1280, 800);
         ctx.globalAlpha = this.alpha;
@@ -130,43 +131,46 @@ class UIManager {
         let selected = this.game.menuController.selected;
 
         ctx.fillStyle = "White"
-        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/AltScreen.png"), 0, 0)
-        ctx.font = "bold 100px Cursive";
-        ctx.fillStyle = "Green"
-        ctx.fillText("Victory!", 450, 200);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/EndScreen.png"), 0, 0)
 
-        ctx.font = "50px serif";
-        ctx.fillStyle = "white"
-        ctx.fillText("Time: " + Math.round(this.game.timer.gameTime * 100) / 100 + "s", 450, 400);
+        ctx.textBaseline = 'middle'
+        ctx.textAlign ='center'
+        ctx.font = "30px cursive";
+        ctx.fillStyle = "Green"
+        ctx.strokeStyle = 'white';
+        let time = this.game.timer.gameTime;
+        let minutes = Math.floor(time / 60);
+        let seconds = Math.round((time % 60) * 100) / 100
+        if (seconds < 10) seconds = "0"+seconds;
+        if (minutes < 10) minutes = "0"+minutes;
+        ctx.fillText("Time: " + minutes + ":" + seconds, 1280/2, 30);
+        // ctx.strokeText("Time: " + Math.round(this.game.timer.gameTime * 100) / 100 + "s", 1280/2, 400);
 
         let icons = ['restart','mainmenu'];
         for (let i = 0; i < icons.length; i++) {
             ctx.drawImage(ASSET_MANAGER.getAsset("./assets/"+ icons[i] + ".png"),
-                (1280 - 300) / 2, 500 + 150 * i, 
+                (1280 - 300) / 2, 500 + 120 * i, 
                 300, 150);
             if (selected == i) {
                 ctx.drawImage(ASSET_MANAGER.getAsset("./assets/arrow.png"),
-                    (1280 - 300) / 2 + 300, 500 + 150 * i, 
+                    (1280 - 300) / 2 + 300, 500 + 120 * i, 
                     150, 150);
             }
         }
-        ctx.globalAlpha = 1;
+        ctx.restore();
     }
 
     drawTimer(ctx) {
         let time = this.game.timer.gameTime;
-        time = Math.round((time) * 100) / 100;
+        let minutes = Math.floor(time / 60);
+        let seconds = Math.round((time % 60) * 100) / 100
+        if (seconds < 10) seconds = "0"+seconds;
+        if (minutes < 10) minutes = "0"+minutes;
         ctx.font = "20px cursive";
         ctx.fillStyle = "white";
         let x = 0+20;
         let y = 800 - 20;
-        if ((time * 100) % 100 == 0) {
-            ctx.fillText(time + ".00s", x, y);
-        } else if ((time * 100) % 10 == 0) {
-            ctx.fillText(time + "0s", x, y);
-        } else {
-            ctx.fillText(time + "s", x, y);
-        }
+        ctx.fillText(minutes + ":" + seconds, x, y);
     }
     
     drawBossHealthBar(ctx) {
@@ -235,16 +239,17 @@ class UIManager {
     drawMainMenu(ctx) {
         let selected = this.game.menuController.selected;
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        let screen = ASSET_MANAGER.getAsset("./assets/title.png");
+        let screen = ASSET_MANAGER.getAsset("./assets/TitleScreen.png");
         ctx.drawImage(screen, 0, 0);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/Title.png"), 0, 0);
         let icons = ['start','options','credits'];
         for (let i = 0; i < icons.length; i++) {
             ctx.drawImage(ASSET_MANAGER.getAsset("./assets/"+ icons[i] + ".png"),
-                (1280 - 300) / 2, 300 + 150 * i, 
+                (1280 - 300) / 2, 400 + 120 * i, 
                 300, 150);
             if (selected == i) {
                 ctx.drawImage(ASSET_MANAGER.getAsset("./assets/arrow.png"),
-                    (1280 - 300) / 2 + 300, 300 + 150 * i, 
+                    (1280 - 300) / 2 + 300, 400 + 120 * i, 
                     150, 150);
             }
         }

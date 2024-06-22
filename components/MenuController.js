@@ -80,7 +80,7 @@ class MenuController {
             if (inputManager.A) inputManager.AHold = true;
             ASSET_MANAGER.playSound("menu_confirm");
             this.game.paused = false;
-            ASSET_MANAGER.resumeBGM();
+            if (ASSET_MANAGER.currentSong != null) ASSET_MANAGER.resumeBGM();
             this.selected = 0;
         }
         if (inputManager.A && !inputManager.AHold && this.selected == 1) { //RESTART

@@ -17,8 +17,6 @@ class Player extends Character {
     this.makeAnimation(5, 4, 0, 5, 9); //DASH
     this.makeAnimation(6, 5, 0, 1, 1); //HURT
     this.makeAnimation(7, 6, 0, 1, 1); //LOSE
-
-
   }
 
   updateBB() {
