@@ -67,7 +67,6 @@ class KoishiPhase2 extends KoishiController {
                     }
                     this.attackEffect.x += this.xVelocity * gameEngine.clockTick;
                     this.attackEffect.displayX += this.xVelocity * gameEngine.clockTick;
-                    ASSET_MANAGER.playSound("slash");
                     break;
                 }
                 case(8): {
@@ -126,6 +125,7 @@ class KoishiPhase2 extends KoishiController {
                     }
                     this.attackEffect.duration = this.attackDuration;
                     this.game.addEntity(this.attackEffect);
+                    ASSET_MANAGER.playSound("slash");
                     break;
                 }
                 case(6): {

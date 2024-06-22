@@ -83,6 +83,7 @@ class PlayerController {
     this.yVelocity = -this.jumpStrength;
     this.grounded = false;
     this.dashDuration = 0;
+    ASSET_MANAGER.playSound("jump");
   }
 
   knockback(other) {
@@ -105,7 +106,7 @@ class PlayerController {
       this.knockback(other);
       this.invuln = 2;
       if (this.player.dead()) {
-        ASSET_MANAGER.playSound("ko");
+        ASSET_MANAGER.playSound("ko2");
       } else {
         ASSET_MANAGER.playSound("player_damaged");
       }

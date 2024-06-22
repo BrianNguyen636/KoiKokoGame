@@ -20,14 +20,14 @@ class KoishiController {
             // this.setBossTime();
             this.antiGrav = false;
             // this.game.combat = false
-            ASSET_MANAGER.playSound("ko");
+            ASSET_MANAGER.playSound("ko1");
             this.facePlayer();
             this.boss.state = knockbackState;
             this.xVelocity = this.forwards() * -400; 
             this.yVelocity = -1100;
         } else if (this.boss.state == knockbackState) {
             if (this.yVelocity >= 0 && this.boss.y == 700 - this.boss.yBoxOffset) {
-                // ASSET_MANAGER.playSound("Thud");
+                ASSET_MANAGER.playSound("land");
                 this.xVelocity = 0;
                 if (this.boss.phase < 5) {
                     
@@ -54,6 +54,7 @@ class KoishiController {
                     this.game.victory = true;
                     this.game.dialog = true;
                     this.game.timer.track = false;
+                    ASSET_MANAGER.playSound("ko2");
                 }
             }
         }
