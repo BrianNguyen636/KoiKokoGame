@@ -59,7 +59,7 @@ class KoishiPhase5 extends KoishiController {
                             speed, angle + this.shotCount * 20, null, 'Koishi', 2, this.game));
                         this.game.addEntity(new Projectile(this.boss.x, this.boss.y, 300, 300, 145,145,10,10,
                             speed, angle - this.shotCount * 20, null, 'Koishi', 3, this.game));
-                        this.shotTimer = 0.05;
+                        this.shotTimer = 0.04;
                         this.shotCount++;
                         ASSET_MANAGER.playSound("danmakushoot");
                     } else {
