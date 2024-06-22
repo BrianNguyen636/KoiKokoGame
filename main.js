@@ -5,17 +5,17 @@ const inputManager = new InputManager();
 
 ASSET_MANAGER.queueDownload("./assets/StartScreen.png")
 ASSET_MANAGER.queueDownload("./assets/Health.png")
-ASSET_MANAGER.queueDownload("./assets/KokoroSprites.png")
-ASSET_MANAGER.queueDownload("./assets/KokoroSpritesFlip.png")
-ASSET_MANAGER.queueDownload("./assets/KokoroEffects.png")
-ASSET_MANAGER.queueDownload("./assets/KokoroPortraits.png")
+
+let files = ['Sprites', 'SpritesFlip','Effects','Portraits'];
+files.forEach(e=>{
+	ASSET_MANAGER.queueDownload("./assets/Kokoro"+ e +".png")
+	ASSET_MANAGER.queueDownload("./assets/Koishi"+ e +".png")
+})
 ASSET_MANAGER.queueDownload("./assets/KokoroGhost.png")
-ASSET_MANAGER.queueDownload("./assets/KoishiSprites.png")
-ASSET_MANAGER.queueDownload("./assets/KoishiSpritesFlip.png")
-ASSET_MANAGER.queueDownload("./assets/KoishiProjectiles.png")
-ASSET_MANAGER.queueDownload("./assets/KoishiEffects.png")
-ASSET_MANAGER.queueDownload("./assets/KoishiPortraits.png")
+
 ASSET_MANAGER.queueDownload("./assets/KoishiCutIn.png")
+ASSET_MANAGER.queueDownload("./assets/KoishiProjectiles.png")
+
 ASSET_MANAGER.queueDownload("./assets/HitEffects.png")
 
 
