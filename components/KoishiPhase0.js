@@ -15,7 +15,7 @@ class KoishiPhase0 extends KoishiController {
             switch(roll) {
                 case(0): {
                     this.attack(1);
-                    // ASSET_MANAGER.playSound("Whoosh");
+                    ASSET_MANAGER.playSound("danmakushoot");
                     this.yVelocity = -1500;
                     let variance = Math.floor(Math.random() * 400);
                     this.xVelocity = (1 - this.boss.facing * 2) * (400 + variance);
@@ -69,7 +69,7 @@ class KoishiPhase0 extends KoishiController {
                      break; 
                 }
                 case(2): { //LAND
-                    // ASSET_MANAGER.playSound("Thud");
+                    ASSET_MANAGER.playSound("land");
                     this.attack(3,0.25);
                     break;
                 }
@@ -85,6 +85,7 @@ class KoishiPhase0 extends KoishiController {
                     }
                     this.attackEffect.duration = this.attackDuration;
                     this.game.addEntity(this.attackEffect);
+                    ASSET_MANAGER.playSound("slash");
                     break;
                 }
                 case(7): {
@@ -97,6 +98,7 @@ class KoishiPhase0 extends KoishiController {
                     this.game.addEntity(new Projectile(this.boss.x, this.boss.y, 300, 300, 140,140,20,20,
                         speed, angle + 30, null, 'Koishi', 0, this.game));    
                     this.attack(8, 1);
+                    ASSET_MANAGER.playSound("danmakushootbig");
                     break;
                 }
                 default: {

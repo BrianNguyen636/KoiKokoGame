@@ -104,6 +104,7 @@ class AssetManager {
     autoRepeat(path) {
         let aud = this.cache[path];
         aud.addEventListener("ended",  () => {
+            aud.currentTime = 12.8;
             aud.play();
         });
     };

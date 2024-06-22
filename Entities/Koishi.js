@@ -9,7 +9,10 @@ class Koishi extends Character {
     this.invuln = false;
 
     this.alpha = 1;
-    this.health = 2;
+
+    //DEBUG
+    // this.health = 1;
+    // this.setController(new KoishiPhase5(this, game));
   }
 
   loadAnimations() {

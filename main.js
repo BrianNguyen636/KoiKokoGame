@@ -23,7 +23,9 @@ ASSET_MANAGER.queueDownload("./assets/Stage.png")
 ASSET_MANAGER.queueDownload("./assets/crowd.png")
 
 
-let audioFiles = ['attack1', 'enemy_damaged', 'player_damaged','menu_confirm','menu_change_option','pause', 'thelostemotion']
+let audioFiles = ['attack1', 'enemy_damaged', 'player_damaged','menu_confirm','menu_change_option','pause', 'thelostemotion',
+	'ko','danmakushoot','danmakushootbig','dash','jump','land','slash','spellcard'
+]
 audioFiles.forEach(e => {
 	ASSET_MANAGER.queueDownload("./assets/audio/" + e + ".wav");
 })

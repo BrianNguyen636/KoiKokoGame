@@ -5,7 +5,7 @@ class Player extends Character {
     this.setController(new PlayerController(this, game));
     this.hurtState = 6;
 
-    // this.health = 2; //DEBUG
+    this.health = 2; //DEBUG
   }
 
   loadAnimations() {

@@ -22,7 +22,7 @@ class KoishiPhase4 extends KoishiController {
             switch(roll) {
                 case(0): {
                     this.attack(1);
-                    // ASSET_MANAGER.playSound("Whoosh");
+                    ASSET_MANAGER.playSound("danmakushoot");
                     this.yVelocity = -1500;
                     this.xVelocity = (1 - this.boss.facing * 2) * (500);
                     break;
@@ -56,6 +56,7 @@ class KoishiPhase4 extends KoishiController {
                             speed, angle + this.shotCount * 20, null, 'Koishi', 2, this.game));
                         this.game.addEntity(new Projectile(this.boss.x, this.boss.y, 300, 300, 145,145,10,10,
                             speed, angle - this.shotCount * 20, null, 'Koishi', 3, this.game));
+                        ASSET_MANAGER.playSound("danmakushoot");
                         this.shotTimer = 0.05;
                         this.shotCount++;
                     } else {
@@ -146,28 +147,31 @@ class KoishiPhase4 extends KoishiController {
                             speed, this.angle, null, 'Koishi', 0, this.game));
                         this.shotTimer = 0.05;
                         this.shotCount++;
+                        ASSET_MANAGER.playSound("danmakushoot");
+
                     } else {
                         this.shotTimer -= this.game.clockTick;
                     }
                     break;
                 }
-                case(9): {
-                    if (this.attackDuration < 1 && this.attackDuration > 0.5) {
-                        if (this.shotTimer <= 0) {
-                            let speed = 750;
-                            let angle = -90;
-                            this.game.addEntity(new Projectile(this.boss.x, this.boss.y, 300, 300, 145,145,10,10,
-                                speed, angle + this.shotCount * 20, null, 'Koishi', 2, this.game));
-                            this.game.addEntity(new Projectile(this.boss.x, this.boss.y, 300, 300, 145,145,10,10,
-                                speed, angle - this.shotCount * 20, null, 'Koishi', 3, this.game));
-                            this.shotTimer = 0.05;
-                            this.shotCount++;
-                        } else {
-                            this.shotTimer -= this.game.clockTick;
-                        }
-                    }
-                    break;
-                }
+                // case(9): {
+                //     if (this.attackDuration < 1 && this.attackDuration > 0.5) {
+                //         if (this.shotTimer <= 0) {
+                //             let speed = 750;
+                //             let angle = -90;
+                //             this.game.addEntity(new Projectile(this.boss.x, this.boss.y, 300, 300, 145,145,10,10,
+                //                 speed, angle + this.shotCount * 20, null, 'Koishi', 2, this.game));
+                //             this.game.addEntity(new Projectile(this.boss.x, this.boss.y, 300, 300, 145,145,10,10,
+                //                 speed, angle - this.shotCount * 20, null, 'Koishi', 3, this.game));
+                //             this.shotTimer = 0.05;
+                //             this.shotCount++;
+                //             ASSET_MANAGER.playSound("danmakushoot");
+                //         } else {
+                //             this.shotTimer -= this.game.clockTick;
+                //         }
+                //     }
+                //     break;
+                // }
             }
         }
         if (this.attackDuration <= 0 && this.boss.state > 0) { //What happens after attack
@@ -180,7 +184,7 @@ class KoishiPhase4 extends KoishiController {
                     break;
                 }
                 case(9): { //LAND
-                    // ASSET_MANAGER.playSound("Thud");
+                    ASSET_MANAGER.playSound("land");
                     this.attack(3,0.25);
                     break;
                 }
@@ -196,6 +200,7 @@ class KoishiPhase4 extends KoishiController {
                     }
                     this.attackEffect.duration = this.attackDuration;
                     this.game.addEntity(this.attackEffect);
+                    ASSET_MANAGER.playSound("slash");
                     break;
                 }
                 case(6): {

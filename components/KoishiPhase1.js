@@ -36,7 +36,7 @@ class KoishiPhase1 extends KoishiController {
                 }
                 case(1):{
                     this.attack(1);
-                    // ASSET_MANAGER.playSound("Whoosh");
+                    ASSET_MANAGER.playSound("danmakushoot");
                     this.yVelocity = -1500;
                     let variance = Math.floor(Math.random() * 400);
                     this.xVelocity = (1 - this.boss.facing * 2) * (400 + variance);
@@ -70,6 +70,7 @@ class KoishiPhase1 extends KoishiController {
                                 this.game.addEntity(rightShot);
                                 this.game.addEntity(leftShot);
                             }
+                            ASSET_MANAGER.playSound("danmakushootbig");
                             this.shotTimer = 0.5;
                             this.shotCount++;
                         } else {
@@ -87,7 +88,7 @@ class KoishiPhase1 extends KoishiController {
                      break; 
                 }
                 case(2): { //LAND
-                    // ASSET_MANAGER.playSound("Thud");
+                    ASSET_MANAGER.playSound("land");
                     this.attack(3,0.25);
                     break;
                 }
@@ -96,6 +97,7 @@ class KoishiPhase1 extends KoishiController {
                         this.declared = true;
                         this.attack(10,2);
                         this.game.uiManager.setCutIn(2, "Instinct \"Release of the Id\"");
+                        ASSET_MANAGER.playSound("spellcard");
                     } else {
                         this.timer = 1;
                         this.boss.state = 0;

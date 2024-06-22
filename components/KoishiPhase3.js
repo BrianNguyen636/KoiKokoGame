@@ -27,7 +27,7 @@ class KoishiPhase3 extends KoishiController {
             switch(roll) {
                 case(0): {
                     this.attack(1);
-                    // ASSET_MANAGER.playSound("Whoosh");
+                    ASSET_MANAGER.playSound("jump");
                     this.yVelocity = -1500;
                     let variance = Math.floor(Math.random() * 400);
                     this.xVelocity = (1 - this.boss.facing * 2) * (400 + variance);
@@ -56,7 +56,7 @@ class KoishiPhase3 extends KoishiController {
                      break; 
                 }
                 case(2): { //LAND
-                    // ASSET_MANAGER.playSound("Thud");
+                    ASSET_MANAGER.playSound("land");
                     this.attack(3,0.25);
                     break;
                 }
@@ -65,6 +65,7 @@ class KoishiPhase3 extends KoishiController {
                         this.declared = true;
                         this.attack(10,2);
                         this.game.uiManager.setCutIn(2, "Rekindled \"Embers of Love\"");
+                        ASSET_MANAGER.playSound("spellcard");
                     } else {
                         this.timer = 1;
                         this.boss.state = 0;
@@ -82,6 +83,7 @@ class KoishiPhase3 extends KoishiController {
                     }
                     this.game.addEntity(new Ember(this.boss.x, this.boss.y, angle));
                     this.game.addEntity(new Ember(this.boss.x, this.boss.y, angle + 180));
+                    ASSET_MANAGER.playSound("danmakushootbig");
                     break;
                 }
 

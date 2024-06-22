@@ -31,7 +31,7 @@ class KoishiPhase5 extends KoishiController {
                 }
                 case(1):{
                     this.attack(1);
-                    // ASSET_MANAGER.playSound("Whoosh");
+                    ASSET_MANAGER.playSound("danmakushoot");
                     this.yVelocity = -1500;
                     // let variance = Math.floor(Math.random() * 400);
                     this.xVelocity = (1 - this.boss.facing * 2) * (200 + 100 * this.attackCount);
@@ -61,6 +61,7 @@ class KoishiPhase5 extends KoishiController {
                             speed, angle - this.shotCount * 20, null, 'Koishi', 3, this.game));
                         this.shotTimer = 0.05;
                         this.shotCount++;
+                        ASSET_MANAGER.playSound("danmakushoot");
                     } else {
                         this.shotTimer -= this.game.clockTick;
                     }
@@ -83,7 +84,7 @@ class KoishiPhase5 extends KoishiController {
                     break;
                 }
                 case(9): { //LAND
-                    // ASSET_MANAGER.playSound("Thud");
+                    ASSET_MANAGER.playSound("land");
                     this.attack(3,0.25);
                     break;
                 }
@@ -92,6 +93,7 @@ class KoishiPhase5 extends KoishiController {
                         this.declared = true;
                         this.attack(10,2);
                         this.game.uiManager.setCutIn(2, "Depths \"Genetics of the Subconscious\"");
+                        ASSET_MANAGER.playSound("spellcard");
                     } else {
                         this.timer = 1;
                         this.boss.state = 0;

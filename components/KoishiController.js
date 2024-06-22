@@ -19,9 +19,8 @@ class KoishiController {
             this.timer = 4;
             // this.setBossTime();
             this.antiGrav = false;
-            this.game.timer.track = false;
             // this.game.combat = false
-            // ASSET_MANAGER.playSound("KO");
+            ASSET_MANAGER.playSound("ko");
             this.facePlayer();
             this.boss.state = knockbackState;
             this.xVelocity = this.forwards() * -400; 
@@ -54,6 +53,7 @@ class KoishiController {
                     this.boss.state = this.loseState;
                     this.game.victory = true;
                     this.game.dialog = true;
+                    this.game.timer.track = false;
                 }
             }
         }

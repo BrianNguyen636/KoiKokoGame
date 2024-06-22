@@ -104,7 +104,11 @@ class PlayerController {
       this.player.state = this.player.hurtState;
       this.knockback(other);
       this.invuln = 2;
-      ASSET_MANAGER.playSound("player_damaged");
+      if (this.player.dead()) {
+        ASSET_MANAGER.playSound("ko");
+      } else {
+        ASSET_MANAGER.playSound("player_damaged");
+      }
       this.game.addEntity(new Effect(this.player.displayX + 100, this.player.displayY + 100, 'Hit', 300, 0, 3, 6));
     }
   }
@@ -160,6 +164,7 @@ class PlayerController {
           if (inputManager.left && !inputManager.right) {this.player.facing = 1;}
           inputManager.CHold = true;
           if (!this.grounded)this.airdash = false;
+          ASSET_MANAGER.playSound("dash");
           this.player.state = 5;
           this.dashDuration = 0.5;
           this.yVelocity = 0;
