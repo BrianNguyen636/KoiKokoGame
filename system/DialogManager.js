@@ -16,7 +16,7 @@ class DialogManager {
         this.intro = [
             {speaker: 'H', text:"Koishi! There you are.", emote: 1},
             {speaker: 'H', text:"I won't lose this time.", emote: 1},
-            {speaker: 'H', text:"Now with what's at stake here.", emote: 1},
+            {speaker: 'H', text:"Not with what's at stake here.", emote: 1},
             {speaker: 'K', text:"Is that so? I don't feel like losing either.", emote:1},
             {speaker: 'K', text:"Do you really want it that bad?", emote:0},
             {speaker: 'H', text:"You already know the answer.", emote:1},

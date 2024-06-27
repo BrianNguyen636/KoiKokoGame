@@ -12,7 +12,7 @@ class PlayerController {
     this.doubleJumped = false;
 
     this.speed = 550;
-    this.dashSpeed = 900;
+    this.dashSpeed = 1000;
     this.dashDuration = 0;
 
     // this.hurtDuration = 0;
@@ -33,6 +33,8 @@ class PlayerController {
     this.player.state = 4;
     this.player.getCurrentAnimation().resetFrames();
     this.animationLock = this.player.getCurrentAnimation().totalTime - gameEngine.clockTick;
+    if (inputManager.right && !inputManager.left) {this.player.facing = 0;}
+    if (inputManager.left && !inputManager.right) {this.player.facing = 1;}
     let effect;
     if (this.player.facing == 0) {
       effect = new Effect(this.player.x + 57, this.player.y - 28, 'Kokoro', 600,
@@ -167,7 +169,7 @@ class PlayerController {
           if (!this.grounded)this.airdash = false;
           ASSET_MANAGER.playSound("dash");
           this.player.state = 5;
-          this.dashDuration = 0.5;
+          this.dashDuration = 0.4;
           this.yVelocity = 0;
           this.player.getCurrentAnimation().resetFrames();
 

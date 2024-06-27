@@ -29,7 +29,7 @@ class KoishiPhase4 extends KoishiController {
                 }
                 case(1):{
                     this.invis = false;
-                    this.attack(5,.6); break;
+                    this.attack(5,.7); break;
                 }
                 case(2):{
                     this.attack(7,.5); break;
